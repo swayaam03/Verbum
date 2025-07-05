@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbum - Where words find meaning</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+    <header>
+        <div class="header-top container">
+            <div class="logo">
+                <h1>Verbum</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#articles">Articles</a></li>
+                    <li><a href="#community">Community</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact" class="nav-button">Sign Up</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                &#9776; </button>
+        </div>
+        
+    </header>
+
+    <main>
+        <section class="featured-articles section-padded">
+            <div class="container">
+                <div class="article-card">
+                    <h2>The Quiet Power of Thoughtful Expression</h2>
+                    <p>In a world of constant noise, Verbum invites you to slow down and rediscover the profound impact of words. Our platform is a sanctuary for authentic voices, where every sentence is crafted with intention and every story finds its resonance.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="image-text-section section-padded">
+            <div class="container layout-two-column">
+                <div class="image-placeholder">
+                    <p>Your serene image goes here</p>
+                </div>
+                <div class="text-content">
+                    <h3>A Canvas for Your Inner World</h3>
+                    <p>Verbum offers a beautifully uncluttered environment, allowing your ideas to flow freely onto the page. With intuitive tools and a focus on simplicity, you can immerse yourself fully in the creative process, from the initial spark to the final masterpiece.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="value-proposition section-padded text-center-content">
+            <div class="container">
+                <h3>Cultivating Connection Through Story</h3>
+                <p>Beyond individual expression, Verbum fosters a vibrant community of writers and readers. Share your insights, engage in meaningful discussions, and find inspiration in the shared journey of bringing words to life. It's a space where every voice is valued.</p>
+            </div>
+        </section>
+
+        <section class="image-text-section reverse-layout section-padded">
+            <div class="container layout-two-column">
+                <div class="image-placeholder">
+                    <p>Another inspiring image here</p>
+                </div>
+                <div class="text-content">
+                    <h3>Refine Your Voice, Elevate Your Craft</h3>
+                    <p>Our resources and community support you at every stage. From prompts that spark imagination to gentle feedback that refines your prose, Verbum is dedicated to helping you evolve as a writer and share your most impactful stories with the world.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="call-to-action section-padded text-center-content">
+            <div class="container">
+                <h3>Ready to Share Your Story?</h3>
+                <a href="#signup" class="button">Begin Your Journey</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content container">
+            <nav class="footer-links">
+                <a href="#about">About Verbum</a>
+                <a href="#articles">Explore Articles</a>
+                <a href="#community">Join Community</a>
+                <a href="#contact">Get in Touch</a>
+                <a href="#privacy">Privacy Policy</a>
+            </nav>
+            <p class="copyright">&copy; 2025 Verbum. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

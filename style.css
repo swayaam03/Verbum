@@ -1,0 +1,851 @@
+:root {
+    --color-background: #F6F1EB; /* Soft Ivory */
+    --color-card-background: #FCFAF6; /* Off-white */
+    --color-text: #2D2D2D; /* Dark Charcoal */
+    --color-muted: rgba(45, 45, 45, 0.65); /* Slightly darker muted text */
+    --color-nav-link: rgba(45, 45, 45, 0.75); /* Muted for nav, a bit more defined */
+    --color-hover: rgba(45, 45, 45, 0.9); /* Darker charcoal on hover */
+    --soft-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Softer, diffused shadow */
+    --lighter-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); /* Even lighter for header */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.7; /* Increased line-height for readability and airy feel */
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; /* Better font rendering for modern browsers */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 1160px; /* Increased max-width for more filled appearance */
+    margin: 0 auto;
+    padding: 0 60px; /* Generous horizontal padding */
+}
+
+/* Header */
+header {
+    background-color: var(--color-card-background);
+    box-shadow: var(--lighter-shadow);
+    position: relative;
+    z-index: 100; /* Ensure header is above other content */
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px; /* Padding specifically for the top bar */
+}
+
+.logo h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.6em; /* Slightly smaller for nav bar */
+    margin: 0;
+    color: var(--color-text);
+    font-weight: 400;
+}
+
+.tagline-hero {
+    text-align: center;
+    padding: 60px 0 100px; /* More vertical padding for the tagline */
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeInTop 1s forwards;
+    animation-delay: 0.4s;
+}
+
+.tagline {
+    font-size: 1.6em; /* Larger tagline */
+    color: var(--color-muted);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Navigation */
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.main-nav li {
+    margin-left: 35px; /* More space between nav items */
+}
+
+.main-nav a {
+    color: var(--color-nav-link);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.05em; /* Slightly larger nav links */
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: var(--color-text);
+}
+
+.nav-button {
+    background-color: var(--color-text);
+    color: var(--color-card-background) !important;
+    padding: 10px 22px; /* Adjusted button padding */
+    border-radius: 5px;
+    font-weight: 600; /* Bolder button text */
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: var(--color-muted);
+    transform: translateY(-1px); /* Subtle lift */
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2.2em; /* Larger hamburger icon */
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Section Common Styles */
+.section-padded {
+    padding: 100px 0; /* Very generous vertical padding for all main sections */
+    opacity: 0;
+    transform: translateY(30px); /* More pronounced initial slide for animation */
+    animation: fadeInBottom 1s forwards;
+    animation-delay: 0.9s; /* Base delay for content sections */
+}
+
+/* Staggered delays for subsequent sections */
+.section-padded:nth-of-type(2) { animation-delay: 1.2s; } /* First image section */
+.section-padded:nth-of-type(3) { animation-delay: 1.5s; } /* Value prop */
+.section-padded:nth-of-type(4) { animation-delay: 1.8s; } /* Second image section */
+.section-padded:nth-of-type(5) { animation-delay: 2.1s; } /* CTA section */
+
+
+.text-center-content {
+    text-align: center;
+}
+
+.text-center-content h3 {
+    max-width: 800px; /* Limit width for center-aligned headings */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center-content p {
+    max-width: 700px; /* Limit width for center-aligned paragraphs */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Featured Article Card Section */
+.featured-articles {
+    display: flex;
+    justify-content: center;
+}
+
+.article-card {
+    background-color: var(--color-card-background);
+    border-radius: 10px; /* Slightly more rounded corners */
+    padding: 60px; /* Even more generous padding inside the card */
+    width: 100%;
+    max-width: 900px; /* Wider card */
+    box-shadow: var(--soft-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.article-card:hover {
+    transform: translateY(-7px); /* More lift on hover */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* More pronounced shadow on hover */
+}
+
+.article-card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8em; /* Larger heading */
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: var(--color-text);
+    font-weight: 400;
+    line-height: 1.2; /* Tighter line-height for headings */
+}
+
+.article-card p {
+    font-size: 1.25em; /* Larger text for prominence */
+    color: var(--color-muted);
+    line-height: 1.7;
+}
+
+/* Image-Text Section Specific Styling */
+.layout-two-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px; /* Even more space between image and text */
+}
+
+.image-text-section.reverse-layout .layout-two-column {
+    flex-direction: row-reverse;
+}
+
+.image-placeholder {
+    flex: 1;
+    min-width: 400px; /* Larger minimum width for image */
+    height: 480px; /* Taller height for image */
+    background-color: rgba(45, 45, 45, 0.04); /* Very subtle placeholder color */
+    border-radius: 10px; /* Rounded corners for images */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-size: 1em;
+    font-style: italic;
+    overflow: hidden;
+    box-shadow: var(--soft-shadow); /* Soft shadow for image area */
+}
+
+.image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.text-content {
+    flex: 1;
+    max-width: 600px; /* Allow text block to be wider */
+}
+
+.text-content h3 {
+    margin-top: 0;
+    font-family: 'DM Serif Display', serif;
+    font-size: 3em; /* Very large heading for these sections */
+    color: var(--color-text);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.text-content p {
+    font-size: 1.25em; /* Larger text */
+    color: var(--color-muted);
+    line-height: 1.8;
+}
+
+/* Button Styling (for Call to Action) */
+.button {
+    display: inline-block;
+    background-color: var(--color-text);
+    color: var(--color-card-background) !important;
+    padding: 18px 40px; /* Larger, more substantial button */
+    border-radius: 6px; /* Slightly more rounded */
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1.15em;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.button:hover {
+    background-color: var(--color-muted);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 80px 0; /* More padding for footer */
+    margin-top: 100px; /* More space above footer */
+    border-top: 1px solid rgba(45, 45, 45, 0.08); /* Lighter border */
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 2.3s; /* Further delay for the footer */
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-links {
+    margin-bottom: 30px;
+}
+
+.footer-links a {
+    color: var(--color-muted);
+    text-decoration: none;
+    margin: 0 25px; /* More space between footer links */
+    font-size: 1.05em;
+    transition: color 0.3s ease;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.footer-links a:last-child {
+    margin-bottom: 0;
+}
+
+footer a:hover {
+    color: var(--color-text);
+}
+
+.copyright {
+    color: var(--color-muted);
+    font-size: 0.9em;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 40px;
+    }
+    .header-top {
+        padding: 20px 40px;
+    }
+    .tagline-hero {
+        padding: 50px 0 80px;
+    }
+    .section-padded {
+        padding: 80px 0;
+    }
+    .article-card {
+        padding: 50px;
+    }
+    .layout-two-column {
+        gap: 60px;
+    }
+    .image-placeholder {
+        min-width: 350px;
+        height: 420px;
+    }
+    .text-content h3 {
+        font-size: 2.6em;
+    }
+    .text-content p {
+        font-size: 1.2em;
+    }
+    .section-padded h3, .section-padded p { /* Apply to all centered section text */
+        padding: 0 20px; /* Add some horizontal padding for smaller screens */
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 30px;
+    }
+    .header-top {
+        padding: 15px 30px;
+    }
+    .logo h1 {
+        font-size: 2.4em;
+    }
+    .main-nav li {
+        margin-left: 25px;
+    }
+    .tagline {
+        font-size: 1.4em;
+    }
+    .article-card h2 {
+        font-size: 2.4em;
+    }
+    .article-card p {
+        font-size: 1.15em;
+    }
+    .image-placeholder {
+        min-width: 300px;
+        height: 380px;
+    }
+    .text-content h3 {
+        font-size: 2.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 25px;
+    }
+    .header-top {
+        padding: 15px 25px;
+    }
+    .logo h1 {
+        font-size: 2em;
+    }
+
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 70px; /* Below header top */
+        left: 0;
+        background-color: var(--color-card-background);
+        box-shadow: var(--soft-shadow);
+        z-index: 99;
+        padding-bottom: 20px;
+    }
+    .main-nav.active {
+        display: flex;
+    }
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .main-nav li {
+        margin: 15px 0;
+    }
+    .menu-toggle {
+        display: block;
+    }
+
+    .tagline-hero {
+        padding: 40px 0 70px;
+    }
+    .tagline {
+        font-size: 1.2em;
+        padding: 0 20px; /* Ensure tagline is also contained */
+    }
+
+    .section-padded {
+        padding: 60px 0;
+    }
+    .article-card {
+        padding: 40px;
+    }
+    .article-card h2 {
+        font-size: 2em;
+    }
+    .article-card p {
+        font-size: 1.1em;
+    }
+
+    .layout-two-column {
+        flex-direction: column; /* Stack image and text vertically */
+        gap: 40px;
+    }
+    .image-text-section.reverse-layout .layout-two-column {
+        flex-direction: column; /* Ensure stacking even if reversed */
+    }
+    .image-placeholder {
+        width: 100%;
+        min-width: unset;
+        height: 320px;
+        margin-bottom: 0; /* No bottom margin when stacked */
+    }
+    .text-content {
+        max-width: 100%; /* Allow text to take full width */
+        text-align: center; /* Center align text content when stacked */
+    }
+    .text-content h3 {
+        font-size: 2.4em;
+        text-align: center; /* Center align these headings too */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .text-content p {
+        font-size: 1.1em;
+        text-align: center; /* Center align these paragraphs too */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section-padded h3 {
+        font-size: 1.8em;
+    }
+    .section-padded p {
+        font-size: 1em;
+    }
+
+    .button {
+        padding: 14px 30px;
+        font-size: 1.05em;
+    }
+
+    footer {
+        margin-top: 70px;
+        padding: 50px 0;
+    }
+    .footer-links a {
+        margin: 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 20px;
+    }
+    .header-top {
+        padding: 10px 20px;
+    }
+    .logo h1 {
+        font-size: 1.8em;
+    }
+    .tagline-hero {
+        padding: 30px 0 50px;
+    }
+    .tagline {
+        font-size: 1.0em;
+        padding: 0 15px;
+    }
+
+    .section-padded {
+        padding: 50px 0;
+    }
+    .article-card {
+        padding: 30px;
+    }
+    .article-card h2 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+    .article-card p {
+        font-size: 1em;
+    }
+
+    .image-placeholder {
+        height: 250px;
+    }
+    .text-content h3 {
+        font-size: 2em;
+    }
+    .text-content p {
+        font-size: 1em;
+    }
+
+    .section-padded h3 {
+        font-size: 1.6em;
+    }
+    .section-padded p {
+        font-size: 0.95em;
+    }
+    .button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+    footer {
+        margin-top: 50px;
+        padding: 40px 0;
+    }
+    .footer-links a {
+        font-size: 0.9em;
+        margin: 0 10px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInTop {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInBottom {
+    from { opacity: 0; transform: translateY(30px); } /* Adjusted for more subtle movement */
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Smooth Scroll (JavaScript based) */
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* --- Authentication Page Specific Styles (Unified Card, Light Theme) --- */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling if content overflows viewport */
+}
+
+/* Base styles for all auth pages (login, signup) */
+.auth-page-body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background); /* Your main site's light background */
+    color: var(--color-text); /* Your main site's text color */
+    display: flex;
+    justify-content: center; /* Center the unified card horizontally */
+    align-items: center; /* Center the unified card vertically */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.auth-page-wrapper {
+    /* This wrapper acts as the container for the single card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Allows card to be max-width within this */
+    padding: 20px; /* Padding around the card */
+    box-sizing: border-box;
+}
+
+.auth-card-unified {
+    display: flex;
+    background-color: var(--color-card-background); /* Your off-white card background */
+    border-radius: 12px; /* Smooth rounded corners for the overall card */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); /* More pronounced, soft shadow */
+    overflow: hidden; /* Ensures inner borders/shadows don't spill */
+    width: 100%;
+    max-width: 900px; /* Max width for the entire unified card */
+    min-height: 550px; /* Minimum height for the card */
+}
+
+/* Left Section - Brand Display (Common for both login/signup) */
+.auth-card-left-section {
+    flex: 1; /* Takes equal space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px; /* Padding inside the left section */
+    box-sizing: border-box;
+    position: relative; /* For the divider */
+}
+
+.auth-card-left-section::after {
+    content: '';
+    position: absolute;
+    right: 0; /* Position at the right edge of the left section */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px; /* Divider thickness */
+    height: 80%; /* Divider height */
+    background-color: rgba(0, 0, 0, 0.08); /* Subtle divider color */
+}
+
+.auth-brand-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content vertically in left section */
+    color: var(--color-text); /* Use your main text color */
+    text-align: center;
+}
+
+/* No SVG for now, but if added later, apply styles here */
+/* .auth-brand-display svg { ... } */
+
+.auth-brand-display h1 {
+    font-family: 'DM Serif Display', serif; /* Serif font for brand name */
+    font-size: 3.5em; /* Large brand name */
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.auth-brand-display .tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1em;
+    color: var(--color-muted); /* Muted tagline color */
+    margin: 0;
+}
+
+/* Right Section - Form Container (Common for both login/signup) */
+.auth-card-right-section {
+    flex: 1; /* Takes equal space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px; /* Padding inside the right section */
+    box-sizing: border-box;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 320px; /* Max width for the form itself within its column */
+    text-align: center;
+}
+
+.auth-heading {
+    font-family: 'DM Serif Display', serif; /* Serif font for heading */
+    font-size: 2.8em; /* Large heading */
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.auth-form {
+    margin-bottom: 30px;
+}
+
+.form-group { /* Reused as is, applies to input containers */
+    margin-bottom: 25px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Very subtle bottom border */
+    background-color: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1em;
+    color: var(--color-text);
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: var(--color-muted);
+    opacity: 0.7;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-bottom-color: var(--color-text); /* Darker border on focus */
+}
+
+.auth-submit-button {
+    width: 100%;
+    padding: 16px 20px;
+    background-color: var(--color-text); /* Dark charcoal background */
+    color: #FFFFFF; /* White text */
+    border: none;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.auth-submit-button:hover {
+    background-color: var(--color-muted);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.auth-links {
+    margin-top: 25px;
+    font-size: 0.95em;
+    color: var(--color-muted);
+    text-align: center;
+}
+
+.auth-links .dark-link {
+    color: var(--color-text); /* Your main dark text color for the link */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.auth-links .dark-link:hover {
+    color: var(--color-muted);
+    text-decoration: underline;
+}
+
+
+/* Responsive Adjustments (Common for all auth pages) */
+@media (max-width: 900px) {
+    .auth-card-unified {
+        flex-direction: column; /* Stack panels vertically on smaller screens */
+        min-height: auto;
+        max-width: 500px;
+    }
+
+    .auth-card-left-section {
+        padding: 40px;
+        min-height: 200px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* Add horizontal divider */
+    }
+
+    .auth-card-left-section::after {
+        display: none; /* Hide vertical divider */
+    }
+
+    .auth-brand-display h1 {
+        font-size: 3em;
+    }
+
+    .auth-brand-display .tagline {
+        font-size: 1em;
+    }
+
+    .auth-card-right-section {
+        padding: 40px;
+    }
+
+    .auth-form-container {
+        max-width: 320px;
+    }
+    .auth-heading {
+        font-size: 2.2em;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 500px) {
+    .auth-page-wrapper {
+        padding: 15px;
+    }
+    .auth-card-unified {
+        border-radius: 8px;
+    }
+    .auth-card-left-section,
+    .auth-card-right-section {
+        padding: 30px;
+    }
+    .auth-brand-display h1 {
+        font-size: 2.5em;
+    }
+    .auth-brand-display .tagline {
+        font-size: 0.9em;
+    }
+    .auth-heading {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-group input {
+        padding: 12px 0;
+        font-size: 1em;
+    }
+    .auth-submit-button {
+        padding: 14px 18px;
+        font-size: 1em;
+        margin-top: 25px;
+    }
+    .auth-links {
+        font-size: 0.85em;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .auth-card-left-section,
+    .auth-card-right-section {
+        padding: 25px;
+    }
+    .auth-form-container {
+        max-width: 280px;
+    }
+    .auth-heading {
+        font-size: 1.6em;
+    }
+}
