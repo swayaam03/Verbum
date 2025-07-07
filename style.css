@@ -569,26 +569,26 @@ html {
 }
 
 
-/* --- Authentication Page Specific Styles (Unified Card, Light Theme) --- */
 
+/* Authentication Page Specific Styles (Unified Card, Light Theme) */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* Prevent scrolling if content overflows viewport */
+    /* overflow: hidden; <--- REMOVED */
 }
-
 /* Base styles for all auth pages (login, signup) */
 .auth-page-body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--color-background); /* Your main site's light background */
-    color: var(--color-text); /* Your main site's text color */
+    background-color: var(--color-background);
+    color: var(--color-text);
     display: flex;
-    justify-content: center; /* Center the unified card horizontally */
-    align-items: center; /* Center the unified card vertically */
-    min-height: 100vh; /* Ensure body takes full viewport height */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* This is fine here if you want login/signup to remain centered without scrolling */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* overflow-x: hidden; <--- If this was added, remove it */
 }
 
 .auth-page-wrapper {
@@ -853,12 +853,12 @@ html, body {
 /* --- News Page Specific Styles --- */
 
 .news-page-body {
-    background-color: var(--color-background); /* Your main light background */
-    color: var(--color-text); /* Your main text color */
+    background-color: var(--color-background);
+    color: var(--color-text);
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden;
+    min-height: 100vh; /* Keep this to ensure it takes full height for footer push */
+    /* overflow-x: hidden; <--- REMOVED */
 }
 
 .news-main-content {
@@ -1038,5 +1038,303 @@ html, body {
     }
     .article-description {
         font-size: 0.85em;
+    }
+}
+
+/* --- Article Creation Page Specific Styles --- */
+
+.create-article-page-body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Keep this */
+    /* overflow-x: hidden; <--- REMOVED */
+}
+
+.create-article-main-content {
+    flex-grow: 1;
+    padding: 60px 0;
+}
+
+.create-article-container {
+    max-width: 800px; /* Adjust max-width for the form container */
+    margin: 0 auto;
+    background-color: var(--color-card-background);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.create-article-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5em;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+.article-creation-form .form-group {
+    margin-bottom: 25px;
+}
+
+.article-creation-form label {
+    display: block;
+    font-size: 1em;
+    color: var(--color-text);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.article-creation-form input[type="text"],
+.article-creation-form input[type="email"], /* If you add email later */
+.article-creation-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    color: var(--color-text);
+    background-color: transparent; /* Keep consistent with other inputs */
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-creation-form input[type="text"]::placeholder,
+.article-creation-form textarea::placeholder {
+    color: var(--color-muted);
+    opacity: 0.7;
+}
+
+.article-creation-form input[type="text"]:focus,
+.article-creation-form textarea:focus {
+    outline: none;
+    border-color: var(--color-text); /* Highlight border on focus */
+    box-shadow: 0 0 0 2px rgba(45, 45, 45, 0.1); /* Subtle focus ring */
+}
+
+/* Specific styling for file input if needed (though browser default often suffice) */
+.article-creation-form input[type="file"] {
+    display: block; /* Ensures it takes full width */
+    width: 100%;
+    padding: 8px 0; /* Adjust padding */
+    font-size: 0.95em;
+    color: var(--color-text);
+}
+
+
+.image-preview {
+    margin-top: 15px;
+    border: 1px dashed rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 250px; /* Limit preview height */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+    object-fit: contain; /* Ensure entire image is visible */
+}
+
+textarea#articleContent {
+    min-height: 250px; /* Make textarea taller */
+    resize: vertical; /* Allow vertical resizing by user */
+    line-height: 1.6;
+}
+
+/* Quill.js specific overrides (uncomment and adjust if using Quill) */
+/*
+.create-article-form .ql-toolbar {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f8f8f8;
+}
+.create-article-form .ql-container {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    color: var(--color-text);
+    background-color: var(--color-card-background);
+}
+.create-article-form .ql-editor {
+    min-height: 200px;
+    line-height: 1.6;
+    padding: 15px;
+}
+*/
+
+
+.submit-article-button {
+    width: 100%;
+    padding: 15px 25px;
+    background-color: var(--color-text); /* Dark button background */
+    color: var(--color-card-background); /* Light text on button */
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.submit-article-button:hover {
+    background-color: var(--color-muted);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Article Preview Area Styles */
+.article-preview-area {
+    margin-top: 80px;
+    padding: 40px;
+    background-color: var(--color-card-background);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.preview-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2em;
+    color: var(--color-text);
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.article-preview-area h2#previewTitle {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8em;
+    color: var(--color-text);
+    margin-bottom: 10px;
+    line-height: 1.2;
+    font-weight: 400;
+}
+
+.preview-meta {
+    font-size: 0.9em;
+    color: var(--color-muted);
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.preview-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.preview-content-html {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05em;
+    color: var(--color-text);
+    line-height: 1.8;
+    text-align: left; /* Align text content left */
+    padding: 0 20px; /* Optional padding for content */
+    margin-bottom: 40px;
+}
+/* Basic styling for content if rich text editor is used */
+.preview-content-html p { margin-bottom: 1em; }
+.preview-content-html h1, .preview-content-html h2, .preview-content-html h3 { font-family: 'DM Serif Display', serif; margin-top: 1.5em; margin-bottom: 0.8em; }
+.preview-content-html ul, .preview-content-html ol { padding-left: 25px; margin-bottom: 1em; }
+.preview-content-html strong { font-weight: 600; }
+.preview-content-html em { font-style: italic; }
+
+
+.note-message {
+    font-size: 0.85em;
+    color: #a00; /* A warning/note color */
+    font-style: italic;
+    margin-top: 30px;
+}
+
+/* Responsive adjustments for Article Creation Page */
+@media (max-width: 768px) {
+    .create-article-container {
+        padding: 40px;
+        border-radius: 8px;
+    }
+    .create-article-heading {
+        font-size: 2em;
+        margin-bottom: 30px;
+    }
+    .article-creation-form input,
+    .article-creation-form textarea {
+        padding: 10px 12px;
+        font-size: 0.95em;
+    }
+    textarea#articleContent {
+        min-height: 200px;
+    }
+    .submit-article-button {
+        padding: 12px 20px;
+        font-size: 1em;
+        margin-top: 25px;
+    }
+    .article-preview-area {
+        padding: 30px;
+    }
+    .preview-heading {
+        font-size: 1.8em;
+    }
+    .article-preview-area h2#previewTitle {
+        font-size: 2.2em;
+    }
+    .preview-meta {
+        font-size: 0.8em;
+    }
+    .preview-content-html {
+        font-size: 0.95em;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .create-article-container {
+        padding: 25px;
+    }
+    .create-article-heading {
+        font-size: 1.6em;
+        margin-bottom: 25px;
+    }
+    textarea#articleContent {
+        min-height: 150px;
+    }
+    .submit-article-button {
+        font-size: 0.95em;
+    }
+    .article-preview-area {
+        padding: 25px;
+        margin-top: 60px;
+    }
+    .preview-heading {
+        font-size: 1.5em;
+    }
+    .article-preview-area h2#previewTitle {
+        font-size: 1.8em;
+    }
+    .preview-content-html {
+        font-size: 0.9em;
+        padding: 0;
+    }
+    .note-message {
+        font-size: 0.8em;
     }
 }
