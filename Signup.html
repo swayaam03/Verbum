@@ -5,7 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Verbum</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> </head>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function validateForm(event) {
+            const password = document.getElementById("password").value;
+            const confirm = document.getElementById("confirm-password").value;
+            if (password !== confirm) {
+                alert("Passwords do not match!");
+                event.preventDefault(); // stop form from submitting
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
 <body class="auth-page-body">
 
     <div class="auth-page-wrapper">
@@ -20,7 +33,8 @@
             <div class="auth-card-right-section">
                 <div class="auth-form-container">
                     <h2 class="auth-heading">Sign Up</h2>
-                    <form class="auth-form">
+                    <!-- CONNECTED TO signup.php -->
+                    <form class="auth-form" action="signup.php" method="POST" onsubmit="return validateForm(event)">
                         <div class="form-group">
                             <input type="text" id="full-name" name="full-name" placeholder="Full Name" required>
                         </div>

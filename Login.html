@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Verbum</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> </head>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body class="auth-page-body">
 
     <div class="auth-page-wrapper">
@@ -20,7 +21,9 @@
             <div class="auth-card-right-section">
                 <div class="auth-form-container">
                     <h2 class="auth-heading">Login</h2>
-                    <form class="auth-form">
+
+                    <!-- Connect form to login.php -->
+                    <form class="auth-form" action="login.php" method="POST">
                         <div class="form-group">
                             <input type="email" id="email" name="email" placeholder="Email" required>
                         </div>
@@ -29,8 +32,9 @@
                         </div>
                         <button type="submit" class="auth-submit-button">Login</button>
                     </form>
+
                     <div class="auth-links">
-                        <span>Don't have an account? <a href="signup.html" class="dark-link">Sign Up</a></span>
+                        <span>Don't have an account? <a href="Signup.html" class="dark-link">Sign Up</a></span>
                     </div>
                 </div>
             </div>
