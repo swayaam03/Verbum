@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Articles - Verbum</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> </head>
+<body class="articles-page-body">
+
+    <header class="minimal-header">
+        <div class="header-top container">
+            <div class="logo">
+                <h1>Verbum</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="create-article.html">Create Article</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                &#9776; </button>
+        </div>
+    </header>
+
+    <main class="articles-main-content">
+        <div class="container">
+            <h2 class="articles-page-heading">All Articles</h2>
+
+            <div class="articles-grid">
+                <article class="article-card">
+                    <img src="https://via.placeholder.com/600x400/F5F0EB/8B8B8B?text=Article+Image+1" alt="Article 1 Image" class="article-card-image">
+                    <div class="article-card-content">
+                        <h3 class="article-card-title">The Art of Mindful Living in a Digital Age</h3>
+                        <p class="article-card-author">By Jane Doe</p>
+                        <p class="article-card-preview">Discover simple practices to stay present and connected in a world dominated by screens and constant notifications. Find your inner peace...</p>
+                        <p class="article-card-date">July 5, 2025</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <img src="https://via.placeholder.com/600x400/E8E4DF/8B8B8B?text=Article+Image+2" alt="Article 2 Image" class="article-card-image">
+                    <div class="article-card-content">
+                        <h3 class="article-card-title">Exploring the Flavors of Mediterranean Cuisine</h3>
+                        <p class="article-card-author">By John Smith</p>
+                        <p class="article-card-preview">A culinary journey through the vibrant and healthy dishes of the Mediterranean. From fresh seafood to rich olive oils...</p>
+                        <p class="article-card-date">June 28, 2025</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <img src="https://via.placeholder.com/600x400/F0EAE1/8B8B8B?text=Article+Image+3" alt="Article 3 Image" class="article-card-image">
+                    <div class="article-card-content">
+                        <h3 class="article-card-title">Sustainable Fashion: A Guide to Ethical Choices</h3>
+                        <p class="article-card-author">By Emily White</p>
+                        <p class="article-card-preview">Learn how to make more conscious decisions when building your wardrobe. Support brands that prioritize ethical production and environmental impact...</p>
+                        <p class="article-card-date">June 20, 2025</p>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <img src="https://via.placeholder.com/600x400/F9F5F0/8B8B8B?text=Article+Image+4" alt="Article 4 Image" class="article-card-image">
+                    <div class="article-card-content">
+                        <h3 class="article-card-title">The Benefits of Daily Journaling for Mental Clarity</h3>
+                        <p class="article-card-author">By Alex Green</p>
+                        <p class="article-card-preview">Discover how a simple daily habit can significantly improve your mental well-being, reduce stress, and foster self-reflection...</p>
+                        <p class="article-card-date">June 15, 2025</p>
+                    </div>
+                </article>
+
+                 </div>
+        </div>
+    </main>
+
+    <!-- <footer>
+        <div class="footer-content container">
+            <nav class="footer-links">
+                <a href="#about">About Verbum</a>
+                <a href="#articles">Explore Articles</a>
+                <a href="#community">Join Community</a>
+                <a href="#contact">Get in Touch</a>
+                <a href="#privacy">Privacy Policy</a>
+            </nav>
+            <p class="copyright">&copy; 2025 Verbum. All rights reserved.</p>
+        </div>
+    </footer> -->
+
+    <script>
+        // General site-wide JS for menu toggle (if present)
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

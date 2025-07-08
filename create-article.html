@@ -30,7 +30,8 @@
         <div class="container create-article-container">
             <h2 class="create-article-heading">Create New Article</h2>
 
-            <form id="articleForm" class="article-creation-form">
+            <form id="articleForm" class="article-creation-form" action="submit-article.php" method="POST" enctype="multipart/form-data">
+
                 <div class="form-group">
                     <label for="articleTitle">Article Title</label>
                     <input type="text" id="articleTitle" name="articleTitle" placeholder="Enter article title" required>
@@ -59,18 +60,17 @@
             </form>
 
             <div id="articlePreviewArea" class="article-preview-area" style="display: none;">
-                <h3 class="preview-heading">Article Preview (Client-side only)</h3>
+                <h3 class="preview-heading">Article Preview</h3>
                 <h2 id="previewTitle"></h2>
                 <p class="preview-meta">By <span id="previewAuthor"></span> on <span id="previewDate"></span></p>
                 <img id="previewArticleImage" src="" alt="Article Image" class="preview-image" style="display: none;">
                 <div id="previewContent" class="preview-content-html"></div>
-                <p class="note-message">Note: This is a client-side preview only. For real publishing, a backend is required.</p>
             </div>
         </div>
     </main>
 
 
-    <script src="create-article.js"></script> <script>
+    <!-- <script src="create-article.js"></script> <script>
         // General site-wide JS for menu toggle (if present)
         document.addEventListener('DOMContentLoaded', () => {
             const menuToggle = document.querySelector('.menu-toggle');
@@ -82,6 +82,6 @@
                 });
             }
         });
-    </script>
+    </script> -->
 </body>
 </html>
