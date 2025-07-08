@@ -1532,3 +1532,16 @@ textarea#articleContent {
         -webkit-line-clamp: 5;
     }
 }
+.image-container {
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.article-card-image {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
