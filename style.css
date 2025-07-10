@@ -1545,3 +1545,415 @@ textarea#articleContent {
     width: auto;
     object-fit: cover;
 }
+
+/* --- Settings Page Specific Styles --- */
+
+.settings-page-body {
+    background-color: var(--color-background); /* Your main light beige/white background */
+    color: var(--color-text); /* Your main text color */
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.settings-main-content {
+    flex-grow: 1;
+    padding: 60px 0;
+}
+
+.settings-container {
+    max-width: 900px; /* Wider container to accommodate multiple sections */
+    margin: 0 auto;
+    padding: 0 20px; /* Horizontal padding for smaller screens */
+}
+
+.settings-page-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3em;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: 60px;
+    font-weight: 400;
+}
+
+.settings-section {
+    background-color: var(--color-card-background); /* Card background */
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05); /* Soft shadow */
+    padding: 40px;
+    margin-bottom: 40px; /* Space between sections */
+    box-sizing: border-box;
+}
+
+.section-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2em;
+    color: var(--color-text);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-weight: 400;
+    text-align: center; /* Center section headings */
+}
+
+.sub-section-heading {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2em;
+    color: var(--color-text);
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Form Group Styles (reused from previous forms) */
+.settings-section .form-group {
+    margin-bottom: 25px;
+}
+
+.settings-section label {
+    display: block;
+    font-size: 1em;
+    color: var(--color-text);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.settings-section input[type="text"],
+.settings-section input[type="email"],
+.settings-section input[type="password"],
+.settings-section textarea,
+.settings-section select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    color: var(--color-text);
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-section input::placeholder,
+.settings-section textarea::placeholder {
+    color: var(--color-muted);
+    opacity: 0.7;
+}
+
+.settings-section input:focus,
+.settings-section textarea:focus,
+.settings-section select:focus {
+    outline: none;
+    border-color: var(--color-text);
+    box-shadow: 0 0 0 2px rgba(45, 45, 45, 0.1);
+}
+
+.settings-section textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.info-text {
+    font-size: 0.85em;
+    color: var(--color-muted);
+    margin-top: 5px;
+    display: block;
+}
+
+/* Profile Picture Specific Styles */
+.profile-picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Circular */
+    object-fit: cover;
+    border: 3px solid var(--color-muted); /* Subtle border */
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.edit-profile-picture-button {
+    background-color: transparent;
+    color: var(--color-text);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.edit-profile-picture-button:hover {
+    background-color: var(--color-text);
+    color: var(--color-card-background);
+    border-color: var(--color-text);
+}
+
+/* Save Buttons */
+.save-button {
+    width: auto; /* Not full width */
+    padding: 12px 30px;
+    background-color: var(--color-text); /* Dark button */
+    color: var(--color-card-background); /* Light text */
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 30px; /* Space above save button */
+    display: block; /* Make it a block element to align left by default */
+    margin-left: auto; /* Push to right */
+    margin-right: auto; /* Push to right */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.save-button:hover {
+    background-color: var(--color-muted);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* Delete Account Specifics */
+.delete-account-section {
+    margin-top: 60px; /* More space above delete section */
+    padding-top: 30px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08); /* Subtle separator */
+    text-align: center;
+}
+
+.warning-text {
+    font-size: 0.9em;
+    color: #CC0000; /* Subtle warning red */
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.delete-button {
+    background-color: #CC0000; /* Red for delete button */
+    color: #FFFFFF;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 10px rgba(204, 0, 0, 0.2);
+}
+
+.delete-button:hover {
+    background-color: #A00000;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(204, 0, 0, 0.3);
+}
+
+/* Preferences Section Specifics (Toggle Switch) */
+.preference-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Subtle separator between preferences */
+}
+
+.preference-item:last-of-type {
+    border-bottom: none; /* No border for the last item */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--color-text); /* Dark toggle on active */
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--color-text);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 28px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+/* Responsive Adjustments for Settings Page */
+@media (max-width: 992px) {
+    .settings-container {
+        max-width: 700px;
+    }
+    .settings-page-heading {
+        font-size: 2.5em;
+    }
+    .settings-section {
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    .section-heading {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .settings-main-content {
+        padding: 40px 0;
+    }
+    .settings-page-heading {
+        font-size: 2.2em;
+        margin-bottom: 40px;
+    }
+    .settings-container {
+        padding: 0 15px;
+    }
+    .settings-section {
+        padding: 25px;
+        margin-bottom: 25px;
+    }
+    .section-heading {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+    .profile-picture-container {
+        margin-bottom: 25px;
+    }
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+    }
+    .edit-profile-picture-button {
+        padding: 6px 12px;
+        font-size: 0.85em;
+    }
+    .settings-section input,
+    .settings-section textarea,
+    .settings-section select {
+        padding: 10px 12px;
+        font-size: 0.95em;
+    }
+    .save-button, .delete-button {
+        padding: 10px 25px;
+        font-size: 0.95em;
+        margin-top: 25px;
+    }
+    .sub-section-heading {
+        font-size: 1.1em;
+        margin-top: 30px;
+    }
+    .warning-text {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    .settings-main-content {
+        padding: 30px 0;
+    }
+    .settings-page-heading {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+    }
+    .settings-section {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .section-heading {
+        font-size: 1.4em;
+    }
+    .profile-picture {
+        width: 80px;
+        height: 80px;
+    }
+    .settings-section label {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+    .settings-section input,
+    .settings-section textarea,
+    .settings-section select {
+        padding: 8px 10px;
+        font-size: 0.9em;
+    }
+    .info-text, .warning-text {
+        font-size: 0.8em;
+    }
+    .save-button, .delete-button {
+        font-size: 0.9em;
+        margin-top: 20px;
+    }
+    .switch {
+        width: 40px;
+        height: 22px;
+    }
+    .slider:before {
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+    }
+    input:checked + .slider:before {
+        -webkit-transform: translateX(18px);
+        -ms-transform: translateX(18px);
+        transform: translateX(18px);
+    }
+    .slider.round {
+        border-radius: 22px;
+    }
+}

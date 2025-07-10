@@ -1,7 +1,10 @@
 <?php
+session_start();
 include 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo "Form submitted!<br>";
+
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -12,13 +15,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_stmt_get_result($stmt);
     
     if ($row = mysqli_fetch_assoc($result)) {
+        echo "User found: " . $row['email'] . "<br>";
+
         if (password_verify($password, $row['password'])) {
-            echo "Login successful!";
+            $_SESSION['user_id'] = $row['id'];
+            echo "Session user_id: " . $_SESSION['user_id'] . "<br>";
+            echo "✅ Login successful!";
         } else {
-            echo "Invalid password.";
+            echo "❌ Invalid password.";
         }
     } else {
-        echo "No user found with this email.";
+        echo "❌ No user found with this email.";
     }
 }
 ?>
