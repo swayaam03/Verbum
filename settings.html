@@ -10,15 +10,13 @@
 <body class="settings-page-body">
     <header class="minimal-header">
         <div class="header-top container">
-            <div class="logo">
-                <h1>Verbum</h1>
-            </div>
+            <div class="logo"><h1>Verbum</h1></div>
             <nav class="main-nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="create-article.html">Create Article</a></li>
+                    <li><a href="create-article.html">Create</a></li>
                     <li><a href="view-articles.php">Articles</a></li>
-                    <li><a href="settings.html">Settings</a></li>
+                    <li><a href="settings.html" class="active">Settings</a></li>
                 </ul>
             </nav>
         </div>
@@ -28,65 +26,94 @@
         <div class="settings-container">
             <h2 class="settings-page-heading">Settings</h2>
 
+            <!-- One big form so all fields (bio & social) save together -->
             <form action="update-settings.php" method="POST" enctype="multipart/form-data">
-                <!-- User Info Section -->
-                <section class="settings-section user-info-section">
-                    <h3 class="section-heading">User Information</h3>
-                    <div class="profile-picture-container">
-                        <img src="uploads/default.jpg" alt="Profile Picture" class="profile-picture" id="profilePicPreview">
-                        <input type="file" name="profile_image" id="profile_image" accept="image/*">
-                    </div>
 
-                    <div class="form-group">
-                        <label for="full_name">Full Name</label>
-                        <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required>
-                    </div>
+            <!-- ░░░ User Info ░░░ -->
+            <section class="settings-section user-info-section">
+                <h3 class="section-heading">User Information</h3>
+                <div class="profile-picture-container">
+    <!-- default avatar shown if user hasn't uploaded -->
+    <img src="uploads/default-avatar.png" alt="Profile Picture" class="profile-picture" id="profilePicPreview">
+    <span class="avatar-placeholder" id="avatarPlaceholder">Upload<br>Profile<br>Picture</span>
+    <input type="file" name="profile_image" id="profile_image" accept="image/*">
+</div>
 
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                    </div>
-                </section>
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" placeholder="Your full name" required>
+                </div>
 
-                <!-- Password Change Section -->
-                <section class="settings-section account-settings-section">
-                    <h3 class="section-heading">Change Password</h3>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="new_password">New Password</label>
-                        <input type="password" id="new_password" name="new_password" placeholder="Enter new password">
-                    </div>
+                <!-- ✅ NEW  Bio / About Me field -->
+                <div class="form-group">
+                    <label for="bio">About Me</label>
+                    <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself…"></textarea>
+                </div>
+            </section>
 
-                    <div class="form-group">
-                        <label for="confirm_password">Confirm New Password</label>
-                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password">
-                    </div>
+            <!-- ░░░ Social Links ░░░ -->
+            <section class="settings-section social-links-section">
+                <h3 class="section-heading">Social Links</h3>
+                <div class="form-group">
+                    <label for="twitter">Twitter</label>
+                    <input type="text" id="twitter" name="twitter" placeholder="https://twitter.com/username">
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn</label>
+                    <input type="text" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/username">
+                </div>
+                <div class="form-group">
+                    <label for="medium">Medium</label>
+                    <input type="text" id="medium" name="medium" placeholder="https://medium.com/@username">
+                </div>
+            </section>
 
-                    <button type="submit" class="save-button">Save Changes</button>
-                </section>
+            <!-- ░░░ Password ░░░ -->
+            <section class="settings-section account-settings-section">
+                <h3 class="section-heading">Change Password</h3>
+
+                <div class="form-group">
+                    <label for="new_password">New Password</label>
+                    <input type="password" id="new_password" name="new_password" placeholder="New password">
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm New Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password">
+                </div>
+            </section>
+
+            <button type="submit" class="save-button">Save All Changes</button>
             </form>
 
-            <!-- Optional: Delete Account Section -->
+            <!-- ░░░ Delete Account ░░░ -->
             <section class="settings-section delete-account-section">
-                <p class="warning-text">Danger zone! Deleting your account is permanent and cannot be undone.</p>
+                <p class="warning-text">Deleting your account is permanent and cannot be undone.</p>
                 <form action="delete-account.php" method="POST">
-                    <button type="submit" class="delete-button">Delete Account</button>
+                    <button type="submit" class="delete-button">Delete My Account</button>
                 </form>
             </section>
         </div>
     </main>
 
-    <script>
-        document.getElementById('profile_image').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('profilePicPreview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
+<script>
+// live preview for profile picture
+const input = document.getElementById('profile_image');
+const preview = document.getElementById('profilePicPreview');
+if (input) {
+  input.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e2 => preview.src = e2.target.result;
+      reader.readAsDataURL(file);
+    }
+  });
+}
+</script>
 </body>
 </html>

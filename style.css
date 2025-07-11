@@ -1957,6 +1957,15 @@ input:checked + .slider:before {
         border-radius: 22px;
     }
 }
+.profile-picture-container { position: relative; }
+.avatar-placeholder{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  font-size:.9em; color:var(--color-muted); text-align:center; pointer-events:none;
+}
+.profile-picture[src*="uploads/default-avatar.png"] + .avatar-placeholder{ display:flex; }
+.profile-picture:not([src*="default-avatar"]) + .avatar-placeholder{ display:none; }
+
 
 /* --- Library Page Specific Styles --- */
 
