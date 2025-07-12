@@ -2248,3 +2248,223 @@ input:checked + .slider:before {
         -webkit-line-clamp: 5;
     }
 }
+
+/* --- Articles Page Specific Styles - INTERACTIVE ELEMENTS --- */
+
+/* Wrapper for image and action buttons */
+.article-card-image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 66.66%; /* Maintain 3:2 aspect ratio (or adjust as needed) */
+    overflow: hidden;
+}
+
+.article-card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Overlay for action buttons (Save) */
+.article-actions-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    z-index: 10;
+}
+
+.save-article-button {
+    background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent white */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%; /* Circular button */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    /* Initial state: hidden, only show on card hover or for saved articles */
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.article-card:hover .save-article-button {
+    opacity: 1; /* Show on card hover */
+    transform: scale(1); /* Return to original size */
+}
+
+/* Force visible if already saved */
+.save-article-button.saved {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.save-article-button:hover {
+    background-color: #f0f0f0; /* Light grey on hover */
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.save-article-button svg {
+    color: #888; /* Muted grey icon */
+    transition: color 0.2s ease;
+}
+
+.save-article-button.saved svg.icon-save-filled {
+    color: var(--color-text); /* Darker color when saved */
+}
+
+.save-article-button:not(.saved) svg.icon-save-unfilled {
+    display: block; /* Ensure unfilled is visible when not saved */
+}
+
+.save-article-button.saved svg.icon-save-unfilled {
+    display: none; /* Hide unfilled when saved */
+}
+
+.save-article-button:not(.saved) svg.icon-save-filled {
+    display: none; /* Hide filled when not saved */
+}
+
+/* Interactions section at the bottom of the card */
+.article-card-interactions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px; /* Space from preview text */
+    margin-top: auto; /* Pushes interactions to the bottom */
+    border-top: 1px solid rgba(0, 0, 0, 0.05); /* Subtle separator */
+}
+
+.like-article-button,
+.comments-link {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9em;
+    color: #888; /* Muted grey for text */
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.like-article-button:hover,
+.comments-link:hover {
+    color: #333; /* Darker on hover */
+    transform: translateY(-1px);
+}
+
+.like-article-button .like-icon {
+    display: inline-flex; /* Keep icon and text aligned */
+    align-items: center;
+    margin-right: 6px;
+}
+
+.like-article-button svg {
+    color: #888; /* Muted grey for heart icon */
+    transition: color 0.2s ease;
+}
+
+.like-article-button.liked svg.icon-like-filled {
+    color: #e04444; /* Red color when liked */
+}
+
+.like-article-button:not(.liked) svg.icon-like-unfilled {
+    display: block; /* Ensure unfilled is visible when not liked */
+}
+
+.like-article-button.liked svg.icon-like-unfilled {
+    display: none; /* Hide unfilled when liked */
+}
+
+.like-article-button:not(.liked) svg.icon-like-filled {
+    display: none; /* Hide filled when not liked */
+}
+
+.comments-link svg {
+    color: #888; /* Muted grey for comment icon */
+    margin-right: 6px;
+    transition: color 0.2s ease;
+}
+
+.comments-link:hover svg {
+    color: #333; /* Darker on hover */
+}
+
+.comments-link .comment-count {
+    font-weight: 500;
+}
+
+/* Adjustments for existing article-card styling to accommodate new elements */
+/* You might want to adjust padding-bottom of .article-card-content */
+.article-card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    /* Ensure there's space for interactions at the bottom */
+    padding-bottom: 20px; /* Adjust if needed */
+}
+
+/* Responsive Adjustments (ensure new elements scale well) */
+@media (max-width: 768px) {
+    .article-actions-overlay {
+        padding: 10px;
+    }
+    .save-article-button {
+        width: 35px;
+        height: 35px;
+    }
+    .save-article-button svg {
+        width: 20px;
+        height: 20px;
+    }
+    .article-card-interactions {
+        flex-direction: column; /* Stack like/comment vertically on small screens */
+        align-items: flex-start;
+        gap: 10px; /* Space between stacked items */
+        padding-top: 10px;
+    }
+    .like-article-button,
+    .comments-link {
+        font-size: 0.85em;
+    }
+    .like-article-button svg,
+    .comments-link svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .article-actions-overlay {
+        padding: 8px;
+    }
+    .save-article-button {
+        width: 30px;
+        height: 30px;
+    }
+    .save-article-button svg {
+        width: 18px;
+        height: 18px;
+    }
+    .article-card-interactions {
+        padding-top: 8px;
+    }
+    .like-article-button,
+    .comments-link {
+        font-size: 0.8em;
+    }
+    .like-article-button svg,
+    .comments-link svg {
+        width: 16px;
+        height: 16px;
+    }
+}
