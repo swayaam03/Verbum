@@ -2468,3 +2468,255 @@ input:checked + .slider:before {
         height: 16px;
     }
 }
+
+/* --- Library Page Specific Styles --- */
+
+/* Re-use or define common styles for card image wrapper and overlay */
+/* (If you already have these globally or under .article-card, you might just need to ensure they apply) */
+
+/* Ensure the wrapper uses padding-top for aspect ratio and positions content absolutely */
+.library-article-card .article-card-image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 66.66%; /* 3:2 Aspect Ratio */
+    overflow: hidden;
+}
+
+.library-article-card .library-article-card-image { /* Note: This was .library-article-card-image, now applying absolute positioning */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.library-article-card .article-actions-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px; /* Adjust padding as needed */
+    z-index: 10;
+    display: flex; /* Allow multiple buttons in overlay */
+    gap: 10px; /* Space between save and remove buttons */
+}
+
+/* Save Article Button (Bookmark) - within the library context */
+.library-article-card .save-article-button {
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    /* On library page, this button is generally visible */
+    opacity: 1; /* Always visible on library page for "unsave" action */
+    transform: scale(1);
+}
+
+.library-article-card .save-article-button:hover {
+    background-color: #f0f0f0;
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.library-article-card .save-article-button svg {
+    color: #888; /* Muted grey for unfilled */
+    transition: color 0.2s ease;
+}
+
+/* Specific styling for the filled/unfilled states */
+.library-article-card .save-article-button.saved svg.icon-save-filled {
+    color: var(--color-text); /* Darker color when "saved" (i.e., currently in library) */
+}
+
+.library-article-card .save-article-button:not(.saved) svg.icon-save-unfilled {
+    display: block; /* Ensure unfilled is visible when not saved */
+}
+.library-article-card .save-article-button.saved svg.icon-save-unfilled {
+    display: none; /* Hide unfilled when saved */
+}
+.library-article-card .save-article-button:not(.saved) svg.icon-save-filled {
+    display: none; /* Hide filled when not saved */
+}
+
+
+/* Adjustments for the existing .remove-from-library-button to fit the overlay */
+.library-article-card .remove-from-library-button {
+    position: static; /* No longer absolutely positioned to card, but within overlay */
+    background-color: rgba(255, 255, 255, 0.85); /* Match save button style */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 40px; /* Make it same size as save button */
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 1; /* Always show on library page */
+    transform: scale(1);
+    transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.library-article-card .remove-from-library-button:hover {
+    background-color: #f0f0f0;
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.library-article-card .remove-from-library-button svg {
+    color: #888;
+}
+
+.library-article-card .remove-from-library-button:hover svg {
+    color: #555;
+}
+
+
+/* New Interactions section at the bottom of the card */
+.library-article-card .article-card-interactions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    margin-top: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.05); /* Subtle separator */
+}
+
+.library-article-card .like-article-button,
+.library-article-card .comments-link {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9em;
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.library-article-card .like-article-button:hover,
+.library-article-card .comments-link:hover {
+    color: #333;
+    transform: translateY(-1px);
+}
+
+.library-article-card .like-article-button .like-icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 6px;
+}
+
+.library-article-card .like-article-button svg {
+    color: #888;
+    transition: color 0.2s ease;
+}
+
+.library-article-card .like-article-button.liked svg.icon-like-filled {
+    color: #e04444;
+}
+
+.library-article-card .like-article-button:not(.liked) svg.icon-like-unfilled {
+    display: block;
+}
+
+.library-article-card .like-article-button.liked svg.icon-like-unfilled {
+    display: none;
+}
+
+.library-article-card .like-article-button:not(.liked) svg.icon-like-filled {
+    display: none;
+}
+
+.library-article-card .comments-link svg {
+    color: #888;
+    margin-right: 6px;
+    transition: color 0.2s ease;
+}
+
+.library-article-card .comments-link:hover svg {
+    color: #333;
+}
+
+.library-article-card .comments-link .comment-count {
+    font-weight: 500;
+}
+
+/* Adjust padding for .library-article-card-content to make space for new elements */
+.library-article-card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding-bottom: 20px; /* Ensure space for interaction bar */
+}
+
+
+/* Responsive Adjustments for Library Page (ensure new elements scale well) */
+@media (max-width: 768px) {
+    .library-article-card .article-actions-overlay {
+        padding: 10px;
+        gap: 8px; /* Slightly reduced gap on smaller screens */
+    }
+    .library-article-card .save-article-button,
+    .library-article-card .remove-from-library-button {
+        width: 35px;
+        height: 35px;
+    }
+    .library-article-card .save-article-button svg,
+    .library-article-card .remove-from-library-button svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .library-article-card .article-card-interactions {
+        flex-direction: column; /* Stack like/comment vertically on small screens */
+        align-items: flex-start;
+        gap: 10px; /* Space between stacked items */
+        padding-top: 10px;
+    }
+    .library-article-card .like-article-button,
+    .library-article-card .comments-link {
+        font-size: 0.85em;
+    }
+    .library-article-card .like-article-button svg,
+    .library-article-card .comments-link svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .library-article-card .article-actions-overlay {
+        padding: 8px;
+        gap: 6px;
+    }
+    .library-article-card .save-article-button,
+    .library-article-card .remove-from-library-button {
+        width: 30px;
+        height: 30px;
+    }
+    .library-article-card .save-article-button svg,
+    .library-article-card .remove-from-library-button svg {
+        width: 18px;
+        height: 18px;
+    }
+    .library-article-card .article-card-interactions {
+        padding-top: 8px;
+    }
+    .library-article-card .like-article-button,
+    .library-article-card .comments-link {
+        font-size: 0.8em;
+    }
+    .library-article-card .like-article-button svg,
+    .library-article-card .comments-link svg {
+        width: 16px;
+        height: 16px;
+    }
+}
