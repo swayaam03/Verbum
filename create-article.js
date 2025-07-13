@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         previewTitle.textContent = title;
         previewAuthor.textContent = author;
         previewDate.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        
+
         // Replace newlines with <br> for basic HTML rendering of textarea content
         previewContent.innerHTML = content.replace(/\n/g, '<br>'); 
 
@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         previewContent.innerHTML = content;
     });
     */
+
    /* ───────── Gemini Generate button ───────── */
 document.getElementById('generateWithGemini').addEventListener('click', () => {
   const btn    = document.getElementById('generateWithGemini');
@@ -118,7 +119,7 @@ document.getElementById('generateWithGemini').addEventListener('click', () => {
     return;
   }
 
-  btn.textContent = "Generating…";
+  btn.textContent = "Generating…"; // Change button text to indicate processing
 
   fetch("generate-article.php",{
     method:"POST",
@@ -127,23 +128,28 @@ document.getElementById('generateWithGemini').addEventListener('click', () => {
   })
   .then(async res=>{
       if(!res.ok){
-        const errText = await res.text();
-        throw new Error(errText);
+        const errText = await res.text(); // Read the error text from the response
+        console.error("PHP proxy error:", errText); // Log the actual error from the PHP side
+        throw new Error("HTTP error! status: " + res.status + ". Details: " + errText);
       }
       return res.json();
   })
   .then(data => {
-  console.log("Gemini response:", data); // 👈 Add this
-  const output = data.candidates?.[0]?.content?.parts?.[0]?.text || "AI did not return content.";
-  document.getElementById('articleTitle').value = prompt;
-  document.getElementById('articleContent').value = output;
-})
+    // Extract the content from the Gemini response
+    const output = data.candidates?.[0]?.content?.parts?.[0]?.text || "AI did not return content.";
 
-  .catch(err=>{
-      console.error("Gemini error →", err);
-      alert("Gemini API error. Check console for details.");
+    // Set the article title and content
+    document.getElementById('articleTitle').value = prompt;
+    document.getElementById('articleContent').value = output;
   })
-  .finally(()=>{ btn.textContent = "🪄 Generate with AI"; });
+  .catch(err=>{
+      console.error("Gemini fetch/parsing error:", err); // Log any errors during fetch or JSON parsing
+      alert("Something went wrong generating content with AI. Please check the console for details.");
+  })
+  .finally(()=>{ 
+      // Always reset button text
+      btn.textContent = "🪄 Generate with AI"; 
+  });
 });
 
 });

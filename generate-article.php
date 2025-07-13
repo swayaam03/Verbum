@@ -6,11 +6,13 @@
 ----------------------------------------------------------- */
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$response = curl_exec($ch);
-echo $response;
 
+// *** THESE TWO LINES BELOW MUST BE REMOVED ***
+// $response = curl_exec($ch);
+// echo $response;
+// ********************************************
 
-$apiKey = "AIzaSyCYcBYkZWqFhJcNh-NfEMYhCGgLys7GsRM";   // ← your key
+$apiKey = "AIzaSyCYcBYkZWqFhJcNh-NfEMYhCGgLys7GsRM";   // <-- REPLACE THIS WITH YOUR ACTUAL GEMINI API KEY
 $prompt = trim($_POST['prompt'] ?? '');
 
 if ($prompt === '') {
@@ -19,7 +21,7 @@ if ($prompt === '') {
     exit;
 }
 
-/*  Build request payload for chat‑bison‑001 (v1beta)  */
+/* Build request payload for chat‑bison‑001 (v1beta)  */
 $payload = [
   "prompt" => [
       "messages" => [
@@ -38,7 +40,7 @@ curl_setopt_array($ch, [
   CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
   CURLOPT_POSTFIELDS     => json_encode($payload)
 ]);
-$response = curl_exec($ch);
+$response = curl_exec($ch); // This is the correct place for curl_exec
 curl_close($ch);
 
 header('Content-Type: application/json');
