@@ -67,6 +67,13 @@
                 <div id="previewContent" class="preview-content-html"></div>
             </div>
         </div>
+        <div class="ai-generator-section">
+    <h3>Need Help Writing?</h3>
+    <label for="aiPrompt">Describe your article topic:</label>
+    <textarea id="aiPrompt" placeholder="e.g. Write an article about benefits of journaling..." rows="3"></textarea>
+    <button type="button" id="generateWithGemini">🪄 Generate with AI</button>
+</div>
+
     </main>
 
 
@@ -83,5 +90,35 @@
             }
         });
     </script> -->
+    <script>
+        document.getElementById('generateWithGemini').addEventListener('click', () => {
+    const prompt = document.getElementById('aiPrompt').value.trim();
+    if (!prompt) {
+        alert("Please enter a topic first.");
+        return;
+    }
+
+    document.getElementById('generateWithGemini').textContent = "Generating...";
+
+    fetch("generate-article.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "prompt=" + encodeURIComponent(prompt)
+    })
+    .then(res => res.json())
+    .then(data => {
+        const output = data.candidates?.[0]?.content?.parts?.[0]?.text || "No content generated.";
+        document.getElementById('articleTitle').value = prompt;
+        document.getElementById('articleContent').value = output;
+        document.getElementById('generateWithGemini').textContent = "🪄 Generate with AI";
+    })
+    .catch(err => {
+        console.error("Gemini error:", err);
+        alert("Something went wrong with Gemini.");
+        document.getElementById('generateWithGemini').textContent = "🪄 Generate with AI";
+    });
+});
+
+    </script>
 </body>
 </html>

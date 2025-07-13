@@ -108,4 +108,42 @@ document.addEventListener('DOMContentLoaded', () => {
         previewContent.innerHTML = content;
     });
     */
+   /* ───────── Gemini Generate button ───────── */
+document.getElementById('generateWithGemini').addEventListener('click', () => {
+  const btn    = document.getElementById('generateWithGemini');
+  const prompt = document.getElementById('aiPrompt').value.trim();
+
+  if (!prompt){
+    alert("Please enter a topic first.");
+    return;
+  }
+
+  btn.textContent = "Generating…";
+
+  fetch("generate-article.php",{
+    method:"POST",
+    headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+    body:"prompt="+encodeURIComponent(prompt)
+  })
+  .then(async res=>{
+      if(!res.ok){
+        const errText = await res.text();
+        throw new Error(errText);
+      }
+      return res.json();
+  })
+  .then(data => {
+  console.log("Gemini response:", data); // 👈 Add this
+  const output = data.candidates?.[0]?.content?.parts?.[0]?.text || "AI did not return content.";
+  document.getElementById('articleTitle').value = prompt;
+  document.getElementById('articleContent').value = output;
+})
+
+  .catch(err=>{
+      console.error("Gemini error →", err);
+      alert("Gemini API error. Check console for details.");
+  })
+  .finally(()=>{ btn.textContent = "🪄 Generate with AI"; });
+});
+
 });
