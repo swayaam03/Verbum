@@ -1,64 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily News - Verbum</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> </head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily News – Verbum</title>
+
+  <!-- Fonts & global CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Quick inline style for the save button (or move to style.css) -->
+  <style>
+    .save-button{
+      margin-top:10px;padding:8px 14px;border:none;border-radius:6px;
+      background:var(--color-text);color:var(--color-card-background);
+      cursor:pointer;font-size:.9em;transition:.2s;
+    }
+    .save-button:hover{ background:var(--color-muted); }
+  </style>
+</head>
 <body class="news-page-body">
-    <header class="minimal-header">
-        <div class="header-top container">
-            <div class="logo">
-                <h1>Verbum</h1> </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="#articles">Articles</a></li>
-                    <li><a href="news.html">News</a></li> <li><a href="#community">Community</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    </ul>
-            </nav>
-            <button class="menu-toggle" aria-label="Toggle navigation">
-                &#9776; </button>
-        </div>
-    </header>
+  <header class="minimal-header">
+    <div class="header-top container">
+      <div class="logo"><h1>Verbum</h1></div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="view-articles.php">Articles</a></li>
+          <li><a href="news.html"   class="active">News</a></li>
+          <li><a href="library.php">Library</a></li>
+        </ul>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle navigation">&#9776;</button>
+    </div>
+  </header>
 
-    <main class="news-main-content">
-        <div class="container">
-            <h2 class="news-section-heading">Latest Daily News</h2>
-            <div class="news-feed" id="newsFeed">
-                <p class="loading-message">Loading news...</p>
-            </div>
-            <button id="loadMoreBtn" class="button load-more-button" style="display: none;">Load More</button>
-        </div>
-    </main>
+  <main class="news-main-content">
+    <div class="container">
+      <h2 class="news-section-heading">Latest Daily News</h2>
 
-    <footer>
-        <div class="footer-content container">
-            <nav class="footer-links">
-                <a href="#about">About Verbum</a>
-                <a href="#articles">Explore Articles</a>
-                <a href="#community">Join Community</a>
-                <a href="#contact">Get in Touch</a>
-                <a href="#privacy">Privacy Policy</a>
-            </nav>
-            <p class="copyright">&copy; 2025 Verbum. All rights reserved.</p>
-        </div>
-    </footer>
+      <div id="newsFeed" class="news-feed">
+        <p class="loading-message">Loading news…</p>
+      </div>
 
-    <script src="news.js"></script> <script>
-        // Optional: If you have general site-wide JS for menu toggle, keep this
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const mainNav = document.querySelector('.main-nav');
+      <button id="loadMoreBtn" class="button load-more-button" style="display:none;">Load More</button>
+    </div>
+  </main>
 
-            if (menuToggle && mainNav) {
-                menuToggle.addEventListener('click', () => {
-                    mainNav.classList.toggle('active');
-                });
-            }
-        });
-    </script>
+  <footer>
+    <div class="footer-content container">
+      <p>&copy; 2025 Verbum. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- News logic -->
+  <script src="news.js"></script>
+
+  <!-- small nav toggle -->
+  <script>
+    document.querySelector('.menu-toggle')?.addEventListener('click',()=>{
+      document.querySelector('.main-nav')?.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
