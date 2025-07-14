@@ -1,133 +1,89 @@
-/* -----------------------------------------------------------
-   news.js  –  Verbum News Feed  (with Save‑to‑Server bookmarks)
-   -----------------------------------------------------------
-   • Fetches news from multiple NewsAPI endpoints
-   • Renders article cards with a round bookmark icon
-   • Saves selected articles to the server via save-news.php
-   • Shows “Load More” paging
------------------------------------------------------------ */
+const API_KEY = "your_news_api_key_here"; // Replace with your News API key
+const BASE_URL = "https://newsapi.org/v2/top-headlines?country=in";
 
-document.addEventListener('DOMContentLoaded', () => {
-  /* ‑‑‑‑‑ 1.  Config ‑‑‑‑‑ */
-  const API_KEY = '3102776ade394622badef9e9564ca712'; // ← your NewsAPI key
-  const NEWS_API_URLS = [
-    `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`,
-    `https://newsapi.org/v2/everything?q=tesla&sortBy=publishedAt&apiKey=${API_KEY}`
-  ];
-
-  const newsFeed    = document.getElementById('newsFeed');
-  const loadMoreBtn = document.getElementById('loadMoreBtn');
-  let   page        = 1;
-  const pageSize    = 10;
-
-  /* ‑‑‑‑‑ 2.  Fetch & render articles ‑‑‑‑‑ */
-  async function fetchNews(pageNum = 1) {
-    if (pageNum === 1) {
-      newsFeed.innerHTML = '<p class="loading-message">Loading news…</p>';
-      loadMoreBtn.style.display = 'none';
-    }
-
-    try {
-      const promises = NEWS_API_URLS.map(url =>
-        fetch(`${url}&page=${pageNum}&pageSize=${pageSize}`).then(r => r.json())
-      );
-      const results = await Promise.allSettled(promises);
-
-      if (pageNum === 1) newsFeed.innerHTML = '';
-
-      let articles = [];
-      let more     = false;
-
-      results.forEach(res => {
-        if (res.status === 'fulfilled' && res.value.status === 'ok') {
-          articles = articles.concat(res.value.articles);
-          if (res.value.totalResults > pageNum * pageSize) more = true;
-        } else {
-          console.error('NewsAPI error:', res);
-        }
-      });
-
-      articles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-
-      if (!articles.length) {
-        newsFeed.innerHTML = '<p>No news available.</p>';
-        return;
-      }
-
-      articles.forEach(a => appendCard(a));
-      loadMoreBtn.style.display = more ? 'block' : 'none';
-    } catch (err) {
-      console.error('Fetch failed:', err);
-      newsFeed.innerHTML = '<p>Error loading news.</p>';
-    }
-  }
-
-  /* ‑‑‑‑‑ 3.  Build one card with bookmark icon ‑‑‑‑‑ */
-  function appendCard(a) {
-    if (!a.title || !a.url) return;
-
-    const card = document.createElement('article');
-    card.className = 'news-article-card';
-    card.style.position = 'relative';           // needed for absolute btn
-
-    const img = a.urlToImage || 'https://via.placeholder.com/400x200?text=No+Image';
-
-    card.innerHTML = `
-      <img src="${img}" alt="${a.title}" class="article-image">
-      <button class="bookmark-btn" title="Save article"
-              data-article='${JSON.stringify(a)}'>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-             stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-        </svg>
-      </button>
-
-      <div class="article-content">
-        <h3 class="article-title">
-          <a href="${a.url}" target="_blank" rel="noopener noreferrer">${a.title}</a>
-        </h3>
-        <p class="article-source-date">
-          ${a.source.name} • ${new Date(a.publishedAt).toLocaleDateString()}
-        </p>
-        <p class="article-description">${a.description ?? ''}</p>
-      </div>
-    `;
-    newsFeed.appendChild(card);
-  }
-
-  /* ‑‑‑‑‑ 4.  Save / bookmark handler ‑‑‑‑‑ */
-  newsFeed.addEventListener('click', async e => {
-    const btn = e.target.closest('.bookmark-btn');
-    if (!btn) return;
-
-    if (btn.classList.contains('saved')) return; // already saved
-
-    const article = JSON.parse(btn.dataset.article);
-
-    try {
-      const res  = await fetch('save-news.php', {
-        method : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify(article)
-      });
-      const json = await res.json();
-
-      if (json.success) {
-        btn.classList.add('saved');
-        btn.title = 'Saved!';
-        btn.querySelector('svg').style.stroke = '#e91e63'; // pink fill
-      } else {
-        alert(json.error || 'Save failed');
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Save failed.');
-    }
-  });
-
-  /* ‑‑‑‑‑ 5.  Pagination button ‑‑‑‑‑ */
-  loadMoreBtn.addEventListener('click', () => { page++; fetchNews(page); });
-
-  /* ‑‑‑‑‑ 6.  Kick‑off first load ‑‑‑‑‑ */
-  fetchNews();
+document.addEventListener("DOMContentLoaded", () => {
+    fetchNews();
 });
+
+function fetchNews() {
+    fetch(`${BASE_URL}&apiKey=${API_KEY}`)
+        .then(res => res.json())
+        .then(data => displayArticles(data.articles))
+        .catch(err => console.error("Error fetching news:", err));
+}
+
+function displayArticles(articles) {
+    const container = document.querySelector(".articles-grid");
+    container.innerHTML = "";
+
+    articles.forEach(article => {
+        const card = document.createElement("article");
+        card.className = "article-card";
+
+        const img = document.createElement("img");
+        img.src = article.urlToImage || "https://via.placeholder.com/600x400?text=No+Image";
+        img.alt = article.title;
+        img.className = "article-card-image";
+
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "article-card-content";
+
+        const title = document.createElement("h3");
+        title.className = "article-card-title";
+        title.textContent = article.title;
+
+        const author = document.createElement("p");
+        author.className = "article-card-author";
+        author.textContent = article.author ? `By ${article.author}` : "Unknown Author";
+
+        const desc = document.createElement("p");
+        desc.className = "article-card-preview";
+        desc.textContent = article.description || "No description available.";
+
+        const date = document.createElement("p");
+        date.className = "article-card-date";
+        date.textContent = new Date(article.publishedAt).toLocaleDateString();
+
+        const saveBtn = document.createElement("button");
+        saveBtn.className = "save-button";
+        saveBtn.innerHTML = "🔖";
+        saveBtn.title = "Save this article";
+        saveBtn.addEventListener("click", () => saveArticle(article));
+
+        contentDiv.append(title, author, desc, date, saveBtn);
+        card.append(img, contentDiv);
+        container.append(card);
+    });
+}
+
+function saveArticle(article) {
+    const articleToSave = {
+        title: article.title,
+        author: article.author || "Unknown",
+        image: article.urlToImage,
+        description: article.description || "",
+        url: article.url,
+        date: article.publishedAt
+    };
+
+    fetch("http://localhost:8000/save-news.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(articleToSave)
+    })
+    .then(res => res.text())
+    .then(response => {
+        if (response.includes("success")) {
+            alert("✅ Article saved!");
+        } else {
+            alert("❌ Save failed.");
+            console.error("Save error:", response);
+        }
+    })
+    .catch(err => {
+        alert("❌ Save failed (network).");
+        console.error("Save error:", err);
+    });
+}
