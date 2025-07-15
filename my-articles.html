@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Articles - Verbum</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> <style>
+        /* Basic styling for the article list (add more to style.css if preferred) */
+        .my-articles-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .my-articles-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-family: 'DM Serif Display', serif;
+        }
+        .article-list {
+            display: grid;
+            gap: 25px;
+        }
+        .article-item {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fdfdfd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .article-item h3 {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+        .article-item p.meta {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 15px;
+        }
+        .article-item .content-snippet {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .article-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .no-articles {
+            text-align: center;
+            color: #888;
+            padding: 50px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body class="create-article-page-body">
+
+    <header class="minimal-header">
+        <div class="header-top container">
+            <div class="logo">
+                <h1>Verbum</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="my-articles.html">My Articles</a></li> <li><a href="news.html">News</a></li>
+                    <li><a href="#community">Profile</a></li>
+                    <li><a href="create-article.html">Create Article</a></li> 
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                &#9776; 
+            </button>
+        </div>
+    </header>
+
+    <main class="my-articles-main-content">
+        <div class="container my-articles-container">
+            <h2>My Posted Articles</h2>
+            <div id="articlesList" class="article-list">
+                <p class="no-articles" id="loadingMessage">Loading articles...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="my-articles.js"></script>
+    <script>
+        // General site-wide JS for menu toggle (if present)
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -56,34 +56,29 @@ function displayArticles(articles) {
     });
 }
 
-function saveArticle(article) {
-    const articleToSave = {
-        title: article.title,
-        author: article.author || "Unknown",
-        image: article.urlToImage,
-        description: article.description || "",
-        url: article.url,
-        date: article.publishedAt
-    };
-
-    fetch("http://localhost:8000/save-news.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(articleToSave)
-    })
-    .then(res => res.text())
-    .then(response => {
-        if (response.includes("success")) {
-            alert("✅ Article saved!");
-        } else {
-            alert("❌ Save failed.");
-            console.error("Save error:", response);
-        }
-    })
-    .catch(err => {
-        alert("❌ Save failed (network).");
-        console.error("Save error:", err);
+async function saveArticle(article) {
+  try {
+    const res  = await fetch("http://localhost/verbum/save-news.php"
+, {
+      method : "POST",
+      headers: { "Content-Type": "application/json" },
+      body   : JSON.stringify(article)
     });
+
+    const text = await res.text();
+    console.log("Server reply →", text);
+
+    let data;
+    try { data = JSON.parse(text); } catch { /* not JSON */ }
+
+    if (res.ok && data?.success) {
+      alert("✅ Article saved!");
+    } else {
+      alert("❌ Save failed: " + (data?.error || res.status));
+    }
+  } catch (err) {
+    console.error(err);
+    alert("❌ Network or server error.");
+  }
 }
+
