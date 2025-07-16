@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbum - Your Creative Writing Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> <style>
+        /* Styles for the articles section on homepage */
+        .articles-homepage-section {
+            padding: 60px 20px;
+            max-width: 900px;
+            margin: 80px auto 0 auto; /* Adjusted margin-top to account for header */
+            background-color: #ffffff;
+            /* border-top: 1px solid #eee; */ /* Removed if no hero section above */
+        }
+        .articles-homepage-section h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .homepage-article-list {
+            display: grid;
+            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+        }
+        .homepage-article-item {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fdfdfd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .homepage-article-item h3 {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.3em;
+        }
+        .homepage-article-item p.meta {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        .homepage-article-item .content-snippet {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            flex-grow: 1; /* Allows snippet to take available space */
+        }
+        .homepage-article-item img {
+            max-width: 100%;
+            height: 180px; /* Fixed height for consistent image size */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: block; /* Ensures margin works */
+        }
+        .no-articles {
+            text-align: center;
+            color: #888;
+            padding: 50px;
+            font-size: 1.1em;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body class="homepage-body">
+
+    <header class="minimal-header">
+        <div class="header-top container">
+            <div class="logo">
+                <a href="index.html"><h1>Verbum</h1></a> </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="my-articles.html">My Articles</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="#profile">Profile</a></li>
+                    <li><a href="create-article.html">Create Article</a></li> 
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                &#9776; 
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="articles-homepage-section">
+            <div class="container">
+                <h2>Latest Articles</h2>
+                <div id="homepageArticlesList" class="homepage-article-list">
+                    <p class="no-articles" id="homepageLoadingMessage">Loading articles...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Verbum. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="homepage.js"></script> 
+    <script>
+        // General site-wide JS for menu toggle (if present)
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
