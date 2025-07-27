@@ -6,15 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             loadingMessage.textContent = "Loading articles...";
             const response = await fetch('fetch-articles.php');
-            
+
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
             }
 
             const articles = await response.json();
-
-            articlesListDiv.innerHTML = ''; // Clear loading message/previous content
+            articlesListDiv.innerHTML = ''; // Clear loading or old content
 
             if (articles.length === 0) {
                 articlesListDiv.innerHTML = '<p class="no-articles">No articles posted yet.</p>';
@@ -25,12 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const articleItem = document.createElement('div');
                 articleItem.classList.add('article-item');
 
-                // Basic HTML structure for each article
                 articleItem.innerHTML = `
                     <h3>${article.title}</h3>
                     <p class="meta">By ${article.author || 'Anonymous'} on ${new Date(article.created_at).toLocaleDateString()}</p>
-                    ${article.image_path ? `<img src="${article.image_path}" alt="${article.title}">` : ''}
-                    <div class="content-snippet">${article.content.substring(0, 200)}...</div> `;
+                    ${article.image_path ? `<img src="uploads/${article.image_path}" alt="${article.title}" class="article-image">` : ''}
+                    <div class="content-snippet">${article.content.substring(0, 200)}...</div>
+                `;
+
                 articlesListDiv.appendChild(articleItem);
             });
 
@@ -40,5 +40,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    fetchArticles(); // Call the function to fetch and display articles when the page loads
+    fetchArticles();
 });
