@@ -27,36 +27,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Form Submission Logic ---
-    articleForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
-
+    // --- Preview Button Logic ---
+    document.getElementById('previewButton').addEventListener('click', function() {
         const title = document.getElementById('articleTitle').value;
-        const author = document.getElementById('articleAuthor').value || 'Anonymous'; // Default to Anonymous
-        const content = articleContentTextarea.value; // Get content from textarea
+        const author = document.getElementById('articleAuthor').value || 'Anonymous';
+        const content = articleContentTextarea.value;
         const imageFile = featureImageInput.files[0];
 
-        // For demonstration, log the article data to console
-        console.log('--- New Article Data ---');
-        console.log('Title:', title);
-        console.log('Author:', author);
-        console.log('Content:', content);
-        if (imageFile) {
-            console.log('Image File Name:', imageFile.name);
-            console.log('Image File Type:', imageFile.type);
-            console.log('Image File Size:', imageFile.size, 'bytes');
-        } else {
-            console.log('No feature image selected.');
-        }
-        console.log('------------------------');
-
-        // --- Client-Side Preview Display ---
-        previewTitle.textContent = title;
+        // Update preview
+        previewTitle.textContent = title || 'Untitled Article';
         previewAuthor.textContent = author;
         previewDate.textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
         // Replace newlines with <br> for basic HTML rendering of textarea content
-        previewContent.innerHTML = content.replace(/\n/g, '<br>'); 
+        previewContent.innerHTML = content.replace(/\n/g, '<br>') || 'No content yet...';
 
         if (imageFile) {
             const reader = new FileReader();
@@ -72,12 +56,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
         articlePreviewArea.style.display = 'block'; // Show the preview area
         articlePreviewArea.scrollIntoView({ behavior: 'smooth' }); // Scroll to preview
+    });
 
-        // In a real application, this is where you would send data to a backend server.
-        // E.g., fetch('/api/articles', { method: 'POST', body: JSON.stringify({ title, author, content, imageFile: imageData }), headers: { 'Content-Type': 'application/json' }})
-        // .then(response => response.json())
-        // .then(data => console.log('Article published successfully:', data))
-        // .catch(error => console.error('Error publishing article:', error));
+    // --- Form Submission Logic ---
+    articleForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const title = document.getElementById('articleTitle').value;
+        const author = document.getElementById('articleAuthor').value || 'Anonymous'; // Default to Anonymous
+        const content = articleContentTextarea.value; // Get content from textarea
+        const imageFile = featureImageInput.files[0];
+
+        // Validate required fields
+        if (!title.trim() || !content.trim()) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        // Create FormData object for file upload
+        const formData = new FormData();
+        formData.append('articleTitle', title);
+        formData.append('articleAuthor', author);
+        formData.append('articleContent', content);
+        if (imageFile) {
+            formData.append('featureImage', imageFile);
+        }
+
+        // Show loading state
+        const submitButton = document.querySelector('.submit-article-button');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Publishing...';
+        submitButton.disabled = true;
+
+        // Submit to backend
+        fetch('submit-article.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Article published successfully!');
+                // Reset form
+                articleForm.reset();
+                imagePreviewContainer.style.display = 'none';
+                articlePreviewArea.style.display = 'none';
+                // Redirect to my articles page
+                window.location.href = 'my-articles.html';
+            } else {
+                alert('Error: ' + (data.error || 'Failed to publish article'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to publish article. Please try again.');
+        })
+        .finally(() => {
+            // Reset button state
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        });
     });
 
     // --- Optional: Quill Rich Text Editor Initialization (Uncomment if using Quill) ---

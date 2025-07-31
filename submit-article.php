@@ -1,58 +1,70 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-echo "✅ submit-article.php is running<br>";
 
 include 'connect.php';
 
-// DEBUG: Check if form was submitted
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Not logged in']);
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "✅ Form received<br>";
-
     // Sanitize & assign variables
-    $title = $_POST['articleTitle'] ?? '';
-    $author = $_POST['articleAuthor'] ?: 'Anonymous';
-    $content = $_POST['articleContent'] ?? '';
+    $title = trim($_POST['articleTitle'] ?? '');
+    $author = trim($_POST['articleAuthor'] ?? 'Anonymous');
+    $content = trim($_POST['articleContent'] ?? '');
+    $user_id = $_SESSION['user_id'];
 
-    echo "Title: $title<br>";
-    echo "Author: $author<br>";
-    echo "Content length: " . strlen($content) . " characters<br>";
+    // Validate required fields
+    if (empty($title) || empty($content)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Title and content are required']);
+        exit;
+    }
 
     // Handle Image Upload
-    $imageName = '';
+    $image_path = '';
     if (isset($_FILES['featureImage']) && $_FILES['featureImage']['error'] === 0) {
         $imageName = basename($_FILES['featureImage']['name']);
         $targetDir = "uploads/";
         if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0777, true); // create folder if missing
+            mkdir($targetDir, 0777, true);
         }
 
         $targetPath = $targetDir . $imageName;
-
-        if (move_uploaded_file($_FILES['featureImage']['tmp_name'], $targetPath)) {
-            echo "✅ Image uploaded: $imageName<br>";
-        } else {
-            echo "❌ Failed to upload image<br>";
+        
+        // Validate file type
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (in_array($_FILES['featureImage']['type'], $allowedTypes)) {
+            if (move_uploaded_file($_FILES['featureImage']['tmp_name'], $targetPath)) {
+                $image_path = $imageName;
+            }
         }
-    } else {
-        echo "⚠️ No image uploaded or upload failed<br>";
     }
 
-    // Insert into DB
-    $sql = "INSERT INTO articles (title, author, content, image) VALUES (?, ?, ?, ?)";
+    // Insert into DB with correct schema
+    $sql = "INSERT INTO articles (title, author, content, image_path, user_id, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
     $stmt = mysqli_prepare($conn, $sql);
 
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ssss", $title, $author, $content, $imageName);
+        mysqli_stmt_bind_param($stmt, "ssssi", $title, $author, $content, $image_path, $user_id);
         if (mysqli_stmt_execute($stmt)) {
-            echo "✅ Article saved to database!";
+            echo json_encode(['success' => true, 'message' => 'Article saved successfully!']);
         } else {
-            echo "❌ Database Error: " . mysqli_error($conn);
+            http_response_code(500);
+            echo json_encode(['error' => 'Database Error: ' . mysqli_error($conn)]);
         }
+        mysqli_stmt_close($stmt);
     } else {
-        echo "❌ Failed to prepare SQL: " . mysqli_error($conn);
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to prepare SQL: ' . mysqli_error($conn)]);
     }
 } else {
-    echo "❌ Invalid request method.";
+    http_response_code(405);
+    echo json_encode(['error' => 'Invalid request method']);
 }
 ?>

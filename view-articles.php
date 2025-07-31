@@ -59,7 +59,7 @@ include 'connect.php';
             $author = htmlspecialchars($row['author'] ?: 'Anonymous');
             $contentPreview = htmlspecialchars(mb_substr($row['content'], 0, 150)) . '...';
             $date = date("F j, Y", strtotime($row['created_at']));
-            $image = $row['image'] ? "uploads/" . $row['image'] : "https://via.placeholder.com/600x400/F5F0EB/8B8B8B?text=No+Image";
+            $image = $row['image_path'] ? "uploads/" . $row['image_path'] : "https://via.placeholder.com/600x400/F5F0EB/8B8B8B?text=No+Image";
 
             echo "
               <article class='article-card'>
