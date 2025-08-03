@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Article - Verbum</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="create-article-page-body">
+
+    <header class="minimal-header">
+        <div class="header-top container">
+            <div class="logo">
+                <h1>Verbum</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="my-articles.html">My Articles</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="#community">Profile</a></li>
+                    <li><a href="create-article.html">Create Article</a></li> 
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                &#9776;
+            </button>
+        </div>
+    </header>
+
+    <main class="create-article-main-content">
+        <div class="container create-article-container">
+            <h2 class="create-article-heading">Edit Article</h2>
+
+            <form id="articleForm" class="article-creation-form">
+                <input type="hidden" id="articleId" name="articleId">
+
+                <div class="form-group">
+                    <label for="articleTitle">Article Title</label>
+                    <input type="text" id="articleTitle" name="articleTitle" placeholder="Enter article title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="articleAuthor">Author Name (Optional)</label>
+                    <input type="text" id="articleAuthor" name="articleAuthor" placeholder="Your Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="featureImage">Feature Image</label>
+                    <input type="file" id="featureImage" name="featureImage" accept="image/*">
+                    <div class="image-preview" id="imagePreview" style="display: none;">
+                        <img id="previewImage" src="" alt="Image Preview">
+                    </div>
+                    <div id="currentImage" style="display: none;">
+                        <p>Current image:</p>
+                        <img id="currentImageSrc" src="" alt="Current Image" style="max-width: 200px; margin: 10px 0;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="articleContent">Article Content</label>
+                    <textarea id="articleContent" name="articleContent" rows="15" placeholder="Write your article content here..." required></textarea>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" id="previewButton" class="preview-button">Preview Article</button>
+                    <button type="submit" class="submit-article-button">Update Article</button>
+                    <button type="button" id="cancelButton" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+
+            <div id="articlePreviewArea" class="article-preview-area" style="display: none;">
+                <h3 class="preview-heading">Article Preview</h3>
+                <h2 id="previewTitle"></h2>
+                <p class="preview-meta">By <span id="previewAuthor"></span> on <span id="previewDate"></span></p>
+                <img id="previewArticleImage" src="" alt="Article Image" class="preview-image" style="display: none;">
+                <div id="previewContent" class="preview-content-html"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // General site-wide JS for menu toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+
+    <script src="edit-article.js"></script>
+</body>
+</html> 
