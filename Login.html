@@ -22,8 +22,8 @@
                 <div class="auth-form-container">
                     <h2 class="auth-heading">Login</h2>
 
-                    <!-- Connect form to login.php -->
-                    <form class="auth-form" action="login.php" method="POST">
+                    <!-- Backend login form -->
+                    <form class="auth-form" id="loginForm" action="login.php" method="POST">
                         <div class="form-group">
                             <input type="email" id="email" name="email" placeholder="Email" required>
                         </div>
@@ -41,5 +41,54 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Frontend validation
+            if (!email || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            
+            // Show loading state
+            const submitButton = document.querySelector('.auth-submit-button');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Logging in...';
+            submitButton.disabled = true;
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('email', email);
+            formData.append('password', password);
+            
+            // Submit to backend
+            fetch('login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Login successful!');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Error: ' + (data.error || 'Login failed'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Login failed. Please try again.');
+            })
+            .finally(() => {
+                // Reset button state
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            });
+        });
+    </script>
 </body>
 </html>

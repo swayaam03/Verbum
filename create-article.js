@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewDate = document.getElementById('previewDate');
     const previewArticleImage = document.getElementById('previewArticleImage');
     const previewContent = document.getElementById('previewContent');
-    const articleContentTextarea = document.getElementById('articleContent'); // For basic textarea
+    const articleContentTextarea = document.getElementById('articleContent');
 
     // --- Image Preview Logic ---
     featureImageInput.addEventListener('change', function(event) {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 previewImage.src = e.target.result;
                 imagePreviewContainer.style.display = 'block';
             };
-            reader.readAsDataURL(file); // Reads the image file as a Data URL
+            reader.readAsDataURL(file);
         } else {
             previewImage.src = '';
             imagePreviewContainer.style.display = 'none';
@@ -54,17 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
             previewArticleImage.style.display = 'none';
         }
 
-        articlePreviewArea.style.display = 'block'; // Show the preview area
-        articlePreviewArea.scrollIntoView({ behavior: 'smooth' }); // Scroll to preview
+        articlePreviewArea.style.display = 'block';
+        articlePreviewArea.scrollIntoView({ behavior: 'smooth' });
     });
 
-    // --- Form Submission Logic ---
+    // --- Form Submission Logic (Frontend Only) ---
     articleForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
 
         const title = document.getElementById('articleTitle').value;
-        const author = document.getElementById('articleAuthor').value || 'Anonymous'; // Default to Anonymous
-        const content = articleContentTextarea.value; // Get content from textarea
+        const author = document.getElementById('articleAuthor').value || 'Anonymous';
+        const content = articleContentTextarea.value;
         const imageFile = featureImageInput.files[0];
 
         // Validate required fields
@@ -73,121 +73,78 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Create FormData object for file upload
-        const formData = new FormData();
-        formData.append('articleTitle', title);
-        formData.append('articleAuthor', author);
-        formData.append('articleContent', content);
-        if (imageFile) {
-            formData.append('featureImage', imageFile);
-        }
-
         // Show loading state
         const submitButton = document.querySelector('.submit-article-button');
         const originalText = submitButton.textContent;
         submitButton.textContent = 'Publishing...';
         submitButton.disabled = true;
 
-        // Submit to backend
-        fetch('submit-article.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Article published successfully!');
-                // Reset form
-                articleForm.reset();
-                imagePreviewContainer.style.display = 'none';
-                articlePreviewArea.style.display = 'none';
-                // Redirect to my articles page
-                window.location.href = 'my-articles.html';
-            } else {
-                alert('Error: ' + (data.error || 'Failed to publish article'));
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Failed to publish article. Please try again.');
-        })
-        .finally(() => {
-            // Reset button state
+        // Simulate publishing (frontend only)
+        setTimeout(() => {
+            // Create article object
+            const article = {
+                title: title,
+                author: author,
+                content: content,
+                image: imageFile ? URL.createObjectURL(imageFile) : null,
+                date: new Date().toISOString(),
+                id: Date.now() // Simple ID generation
+            };
+
+            // Store in localStorage for demo purposes
+            const articles = JSON.parse(localStorage.getItem('articles') || '[]');
+            articles.push(article);
+            localStorage.setItem('articles', JSON.stringify(articles));
+
+            alert('Article published successfully! (Frontend Demo)');
+            
+            // Reset form
+            articleForm.reset();
+            imagePreviewContainer.style.display = 'none';
+            articlePreviewArea.style.display = 'none';
+            
+            // Redirect to my articles page
+            window.location.href = 'my-articles.html';
+        }, 1000);
+
+        // Reset button state
+        setTimeout(() => {
             submitButton.textContent = originalText;
             submitButton.disabled = false;
-        });
+        }, 1000);
     });
 
-    // --- Optional: Quill Rich Text Editor Initialization (Uncomment if using Quill) ---
-    /*
-    var quill = new Quill('#editor-container', {
-        theme: 'snow', // 'snow' is a clean, modern theme
-        placeholder: 'Write your article content here...',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                ['blockquote', 'code-block'],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                ['link', 'image'],                                // link and image, etc.
-                ['clean']                                         // remove formatting button
-            ]
+    // --- AI Generator (Frontend Demo) ---
+    document.getElementById('generateWithGemini').addEventListener('click', () => {
+        const btn = document.getElementById('generateWithGemini');
+        const prompt = document.getElementById('aiPrompt').value.trim();
+
+        if (!prompt) {
+            alert("Please enter a topic first.");
+            return;
         }
+
+        btn.textContent = "Generating…";
+
+        // Simulate AI generation (frontend demo)
+        setTimeout(() => {
+            const demoContent = `This is a demo article about "${prompt}". 
+
+In this comprehensive guide, we'll explore the various aspects of this topic and provide valuable insights for readers.
+
+Key points to consider:
+• Understanding the basics
+• Exploring advanced concepts
+• Practical applications
+• Best practices and tips
+
+This demo content shows how the AI generation would work in a real application. The actual implementation would connect to an AI service like Gemini or ChatGPT.`;
+
+            // Set the article title and content
+            document.getElementById('articleTitle').value = prompt;
+            document.getElementById('articleContent').value = demoContent;
+            
+            btn.textContent = "🪄 Generate with AI";
+        }, 2000);
     });
-
-    // When submitting the form, get HTML content from Quill editor
-    articleForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        // ... (other form field fetching) ...
-        const content = quill.root.innerHTML; // Get HTML content from Quill
-        // ... (rest of submission logic) ...
-        // Update preview content:
-        previewContent.innerHTML = content;
-    });
-    */
-
-   /* ───────── Gemini Generate button ───────── */
-document.getElementById('generateWithGemini').addEventListener('click', () => {
-  const btn    = document.getElementById('generateWithGemini');
-  const prompt = document.getElementById('aiPrompt').value.trim();
-
-  if (!prompt){
-    alert("Please enter a topic first.");
-    return;
-  }
-
-  btn.textContent = "Generating…"; // Change button text to indicate processing
-
-  fetch("generate-article.php",{
-    method:"POST",
-    headers:{ "Content-Type":"application/x-www-form-urlencoded" },
-    body:"prompt="+encodeURIComponent(prompt)
-  })
-  .then(async res=>{
-      if(!res.ok){
-        const errText = await res.text(); // Read the error text from the response
-        console.error("PHP proxy error:", errText); // Log the actual error from the PHP side
-        throw new Error("HTTP error! status: " + res.status + ". Details: " + errText);
-      }
-      return res.json();
-  })
-  .then(data => {
-    // Extract the content from the Gemini response
-    const output = data.candidates?.[0]?.content?.parts?.[0]?.text || "AI did not return content.";
-
-    // Set the article title and content
-    document.getElementById('articleTitle').value = prompt;
-    document.getElementById('articleContent').value = output;
-  })
-  .catch(err=>{
-      console.error("Gemini fetch/parsing error:", err); // Log any errors during fetch or JSON parsing
-      alert("Something went wrong generating content with AI. Please check the console for details.");
-  })
-  .finally(()=>{ 
-      // Always reset button text
-      btn.textContent = "🪄 Generate with AI"; 
-  });
-});
-
 });

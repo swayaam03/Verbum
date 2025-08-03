@@ -33,8 +33,8 @@
             <div class="auth-card-right-section">
                 <div class="auth-form-container">
                     <h2 class="auth-heading">Sign Up</h2>
-                    <!-- CONNECTED TO signup.php -->
-                    <form class="auth-form" action="signup.php" method="POST" onsubmit="return validateForm(event)">
+                    <!-- Backend signup form -->
+                    <form class="auth-form" id="signupForm" action="signup.php" method="POST">
                         <div class="form-group">
                             <input type="text" id="full-name" name="full-name" placeholder="Full Name" required>
                         </div>
@@ -50,12 +50,75 @@
                         <button type="submit" class="auth-submit-button">Sign Up</button>
                     </form>
                     <div class="auth-links">
-                        <span>Already have an account? <a href="login.html" class="dark-link">Log In</a></span>
+                        <span>Already have an account? <a href="Login.html" class="dark-link">Log In</a></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('full-name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            // Frontend validation
+            if (!fullName || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return;
+            }
+            
+            // Show loading state
+            const submitButton = document.querySelector('.auth-submit-button');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Creating Account...';
+            submitButton.disabled = true;
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('full-name', fullName);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('confirm-password', confirmPassword);
+            
+            // Submit to backend
+            fetch('signup.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Account created successfully!');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Error: ' + (data.error || 'Signup failed'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Signup failed. Please try again.');
+            })
+            .finally(() => {
+                // Reset button state
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            });
+        });
+    </script>
 </body>
 </html>
