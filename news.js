@@ -1,84 +1,133 @@
-const API_KEY = "your_news_api_key_here"; // Replace with your News API key
-const BASE_URL = "https://newsapi.org/v2/top-headlines?country=in";
+document.addEventListener('DOMContentLoaded', function() {
+    const newsContainer = document.getElementById('newsContainer');
+    const loadingMessage = document.getElementById('loadingMessage');
+    const paginationContainer = document.getElementById('paginationContainer');
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchNews();
-});
+    let currentPage = 1;
+    let totalPages = 1;
 
-function fetchNews() {
-    fetch(`${BASE_URL}&apiKey=${API_KEY}`)
-        .then(res => res.json())
-        .then(data => displayArticles(data.articles))
-        .catch(err => console.error("Error fetching news:", err));
-}
+    // Load news from backend
+    function loadNews(page = 1) {
+        loadingMessage.textContent = "Loading news...";
+        loadingMessage.style.display = "block";
+        newsContainer.innerHTML = '';
+        
+        fetch(`fetch-all-articles.php?page=${page}&limit=10`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            loadingMessage.style.display = "none";
+            
+            if (data.success) {
+                const articles = data.articles;
+                currentPage = data.pagination.current_page;
+                totalPages = data.pagination.total_pages;
+                
+                if (articles.length === 0) {
+                    newsContainer.innerHTML = `
+                        <div class="no-news">
+                            <h3>No Articles Yet</h3>
+                            <p>No articles have been published yet. Be the first to create one!</p>
+                            <a href="create-article.html" class="btn btn-primary">Create Article</a>
+                        </div>
+                    `;
+                    return;
+                }
 
-function displayArticles(articles) {
-    const container = document.querySelector(".articles-grid");
-    container.innerHTML = "";
+                const newsHTML = articles.map(article => {
+                    const date = new Date(article.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
 
-    articles.forEach(article => {
-        const card = document.createElement("article");
-        card.className = "article-card";
+                    return `
+                        <div class="news-item" data-article-id="${article.id}">
+                            ${article.image_path ? `<img src="${article.image_path}" alt="Article Image">` : ''}
+                            <h3>${article.title}</h3>
+                            <p class="meta">By ${article.author} on ${date}</p>
+                            <div class="content-snippet">${article.content_preview}</div>
+                            <div class="news-actions">
+                                <button class="btn btn-primary" onclick="viewArticle(${article.id})">Read More</button>
+                                <button class="btn btn-secondary" onclick="saveToLibrary(${article.id})">Save to Library</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
 
-        const img = document.createElement("img");
-        img.src = article.urlToImage || "https://via.placeholder.com/600x400?text=No+Image";
-        img.alt = article.title;
-        img.className = "article-card-image";
-
-        const contentDiv = document.createElement("div");
-        contentDiv.className = "article-card-content";
-
-        const title = document.createElement("h3");
-        title.className = "article-card-title";
-        title.textContent = article.title;
-
-        const author = document.createElement("p");
-        author.className = "article-card-author";
-        author.textContent = article.author ? `By ${article.author}` : "Unknown Author";
-
-        const desc = document.createElement("p");
-        desc.className = "article-card-preview";
-        desc.textContent = article.description || "No description available.";
-
-        const date = document.createElement("p");
-        date.className = "article-card-date";
-        date.textContent = new Date(article.publishedAt).toLocaleDateString();
-
-        const saveBtn = document.createElement("button");
-        saveBtn.className = "save-button";
-        saveBtn.innerHTML = "🔖";
-        saveBtn.title = "Save this article";
-        saveBtn.addEventListener("click", () => saveArticle(article));
-
-        contentDiv.append(title, author, desc, date, saveBtn);
-        card.append(img, contentDiv);
-        container.append(card);
-    });
-}
-
-async function saveArticle(article) {
-  try {
-    const res  = await fetch("http://localhost/verbum/save-news.php"
-, {
-      method : "POST",
-      headers: { "Content-Type": "application/json" },
-      body   : JSON.stringify(article)
-    });
-
-    const text = await res.text();
-    console.log("Server reply →", text);
-
-    let data;
-    try { data = JSON.parse(text); } catch { /* not JSON */ }
-
-    if (res.ok && data?.success) {
-      alert("✅ Article saved!");
-    } else {
-      alert("❌ Save failed: " + (data?.error || res.status));
+                newsContainer.innerHTML = newsHTML;
+                
+                // Add pagination
+                if (totalPages > 1) {
+                    renderPagination();
+                }
+            } else {
+                newsContainer.innerHTML = `
+                    <div class="no-news">
+                        <h3>Error Loading News</h3>
+                        <p>${data.error || 'Failed to load news'}</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            loadingMessage.style.display = "none";
+            newsContainer.innerHTML = `
+                <div class="no-news">
+                    <h3>Error Loading News</h3>
+                    <p>There was an error loading the news. Please try refreshing the page.</p>
+                </div>
+            `;
+        });
     }
-  } catch (err) {
-    console.error(err);
-    alert("❌ Network or server error.");
-  }
-}
+
+    // Render pagination
+    function renderPagination() {
+        let paginationHTML = '<div class="pagination">';
+        
+        // Previous button
+        if (currentPage > 1) {
+            paginationHTML += `<button class="btn btn-secondary" onclick="changePage(${currentPage - 1})">Previous</button>`;
+        }
+        
+        // Page numbers
+        for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+            const activeClass = i === currentPage ? 'active' : '';
+            paginationHTML += `<button class="btn ${activeClass}" onclick="changePage(${i})">${i}</button>`;
+        }
+        
+        // Next button
+        if (currentPage < totalPages) {
+            paginationHTML += `<button class="btn btn-secondary" onclick="changePage(${currentPage + 1})">Next</button>`;
+        }
+        
+        paginationHTML += '</div>';
+        paginationContainer.innerHTML = paginationHTML;
+    }
+
+    // Change page function
+    window.changePage = function(page) {
+        if (page >= 1 && page <= totalPages) {
+            loadNews(page);
+        }
+    };
+
+    // View article function
+    window.viewArticle = function(articleId) {
+        window.location.href = `view-article.html?id=${articleId}`;
+    };
+
+    // Save to library function (will be implemented in Library backend)
+    window.saveToLibrary = function(articleId) {
+        alert('Save to library functionality will be implemented in the Library backend step.');
+    };
+
+    // Load news when page loads
+    loadNews();
+});
 

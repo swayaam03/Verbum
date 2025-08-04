@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily News – Verbum</title>
+  <title>Latest Articles – Verbum</title>
 
   <!-- Fonts & global CSS -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -25,9 +25,10 @@
       <div class="logo"><h1>Verbum</h1></div>
       <nav class="main-nav">
         <ul>
-          <li><a href="view-articles.php">Articles</a></li>
-          <li><a href="news.html"   class="active">News</a></li>
-          <li><a href="library.php">Library</a></li>
+          <li><a href="my-articles.html">My Articles</a></li>
+          <li><a href="news.html" class="active">News</a></li>
+          <li><a href="library.html">Library</a></li>
+          <li><a href="create-article.html">Create Article</a></li>
         </ul>
       </nav>
       <button class="menu-toggle" aria-label="Toggle navigation">&#9776;</button>
@@ -36,19 +37,23 @@
 
   <main class="news-main-content">
     <div class="container">
-      <h2 class="news-section-heading">Latest Daily News</h2>
+      <h2 class="news-section-heading">Latest Articles</h2>
 
-      <div id="newsFeed" class="news-feed">
-        <p class="loading-message">Loading news…</p>
+      <div id="loadingMessage" class="loading-message">Loading news...</div>
+      
+      <div id="newsContainer" class="news-container">
+        <!-- News items will be loaded here -->
       </div>
 
-      <button id="loadMoreBtn" class="button load-more-button" style="display:none;">Load More</button>
+      <div id="paginationContainer" class="pagination-container">
+        <!-- Pagination will be loaded here -->
+      </div>
     </div>
   </main>
 
   <footer>
     <div class="footer-content container">
-      <p>&copy; 2025 Verbum. All rights reserved.</p>
+      <p>&copy; 2025 Verbum. All rights reserved.</p>
     </div>
   </footer>
 

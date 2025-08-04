@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Article - Verbum</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="view-article-page-body">
+
+    <header class="minimal-header">
+        <div class="header-top container">
+            <div class="logo">
+                <h1>Verbum</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="my-articles.html">My Articles</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="library.html">Library</a></li>
+                    <li><a href="create-article.html">Create Article</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                &#9776;
+            </button>
+        </div>
+    </header>
+
+    <main class="view-article-main-content">
+        <div class="container">
+            <div id="loadingMessage" class="loading-message">Loading article...</div>
+            
+            <div id="articleContainer" class="article-container" style="display: none;">
+                <div class="article-header">
+                    <h1 id="articleTitle" class="article-title"></h1>
+                    <div class="article-meta">
+                        <p>By <span id="articleAuthor"></span> on <span id="articleDate"></span></p>
+                    </div>
+                </div>
+
+                <div id="articleImage" class="article-image" style="display: none;">
+                    <img id="articleImageSrc" src="" alt="Article Image">
+                </div>
+
+                <div id="articleContent" class="article-content">
+                    <!-- Article content will be loaded here -->
+                </div>
+
+                <div class="article-actions">
+                    <button id="backButton" class="btn btn-secondary">Back to News</button>
+                    <button id="saveToLibraryButton" class="btn btn-primary">Save to Library</button>
+                </div>
+            </div>
+
+            <div id="errorContainer" class="error-container" style="display: none;">
+                <h3>Error Loading Article</h3>
+                <p id="errorMessage"></p>
+                <button id="backToNewsButton" class="btn btn-primary">Back to News</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // General site-wide JS for menu toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+
+    <script src="view-article.js"></script>
+</body>
+</html> 
