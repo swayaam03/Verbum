@@ -69,8 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
             articleImage.style.display = 'none';
         }
 
-        // Set content (replace newlines with <br> for basic HTML rendering)
-        articleContent.innerHTML = article.content.replace(/\n/g, '<br>');
+        // Set content with proper formatting
+        const formattedContent = article.content
+            .replace(/\n\n/g, '</p><p>') // Double newlines become paragraph breaks
+            .replace(/\n/g, '<br>'); // Single newlines become line breaks
+        
+        articleContent.innerHTML = `<p>${formattedContent}</p>`;
 
         // Show article container
         articleContainer.style.display = 'block';

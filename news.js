@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     return `
                         <div class="news-item" data-article-id="${article.id}">
-                            ${article.image_path ? `<img src="${article.image_path}" alt="Article Image">` : ''}
+                            ${article.image_path ? `<img src="${article.image_path}" alt="Article Image" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 20px;">` : ''}
                             <h3>${article.title}</h3>
                             <p class="meta">By ${article.author} on ${date}</p>
                             <div class="content-snippet">${article.content_preview}</div>
